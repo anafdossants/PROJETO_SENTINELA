@@ -1,146 +1,797 @@
 /* =========================================================
-   FORÇAR SISTEMA EM TELA CHEIA
+   SISTEMA DE GESTÃO CLÍNICA
+   TEMA ELEGANTE — #571A1A / #EEE2E2
    ========================================================= */
+
+:root {
+  --vinho: #571A1A;
+  --vinho-hover: #6D2424;
+  --vinho-escuro: #3E1010;
+
+  --claro: #EEE2E2;
+  --fundo: #F7F2F2;
+  --branco: #FFFFFF;
+
+  --texto: #3A2525;
+  --texto-secundario: #806D6D;
+
+  --borda: #DCCACA;
+  --sombra: rgba(87, 26, 26, 0.12);
+
+  --sucesso: #3F7560;
+  --alerta: #A97828;
+  --erro: #9B3030;
+
+  --raio: 14px;
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
 
 html,
 body {
   width: 100%;
-  min-width: 100%;
-  height: 100%;
   min-height: 100%;
   margin: 0;
   padding: 0;
 }
 
 body {
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+  background:
+    linear-gradient(
+      135deg,
+      #571A1A 0%,
+      #461313 45%,
+      #EEE2E2 100%
+    );
+
+  color: var(--texto);
+
+  min-height: 100vh;
+
   overflow-x: hidden;
-  overflow-y: auto;
-}
-
-/* Container principal ocupa toda a janela */
-.container {
-  position: relative;
-
-  width: 100vw !important;
-  min-width: 100vw !important;
-  max-width: none !important;
-
-  height: 100vh !important;
-  min-height: 100vh !important;
-
-  margin: 0 !important;
-
-  border: none !important;
-  border-radius: 0 !important;
-
-  box-shadow: none !important;
-
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-/* Evita que elementos internos criem uma "caixa" central */
-.container > * {
-  max-width: none;
-}
-
-/* Menu lateral sempre encostado nas bordas */
-.container::before {
-  position: fixed !important;
-
-  top: 0 !important;
-  left: 0 !important;
-
-  height: 100vh !important;
-}
-
-/* Barra superior do menu */
-.container::after {
-  position: fixed !important;
-
-  top: 0 !important;
-  left: 0 !important;
-}
-
-/* Cards ocupam a área disponível */
-.card,
-.pacientes-fila,
-#resultado,
-table {
-  max-width: none;
 }
 
 /* =========================================================
-   TELAS GRANDES
+   CONTAINER PRINCIPAL
+   ========================================================= */
+
+.container {
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  margin: 0;
+
+  padding: 40px;
+
+  background: var(--fundo);
+
+  border-radius: 0;
+
+  box-shadow: none;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* =========================================================
+   TIPOGRAFIA
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--vinho);
+
+  font-weight: 750;
+
+  letter-spacing: -0.4px;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 26px;
+}
+
+h3 {
+  font-size: 19px;
+}
+
+p {
+  line-height: 1.6;
+}
+
+.subtitulo {
+  color: var(--texto-secundario);
+
+  font-size: 14px;
+
+  margin-top: 5px;
+}
+
+/* =========================================================
+   TOPO
+   ========================================================= */
+
+.topo,
+.pagina-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 25px;
+}
+
+.topo h2,
+.pagina-header h2 {
+  margin: 0;
+}
+
+.acoes {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+/* =========================================================
+   LINHAS
+   ========================================================= */
+
+hr {
+  border: 0;
+
+  border-top: 1px solid var(--borda);
+
+  margin: 28px 0;
+}
+
+/* =========================================================
+   CAMPOS
+   ========================================================= */
+
+label,
+.campo-label {
+  display: block;
+
+  color: var(--vinho);
+
+  font-weight: 700;
+
+  margin-bottom: 7px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+
+  padding: 13px 15px;
+
+  margin-bottom: 17px;
+
+  border: 1px solid var(--borda);
+
+  border-radius: 10px;
+
+  background: var(--branco);
+
+  color: var(--texto);
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #A18D8D;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--vinho);
+
+  box-shadow:
+    0 0 0 3px rgba(87, 26, 26, .10);
+
+  background: #FFFDFD;
+}
+
+textarea {
+  min-height: 110px;
+
+  resize: vertical;
+}
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
+button {
+  border: 0;
+
+  border-radius: 10px;
+
+  padding: 12px 18px;
+
+  background: var(--vinho);
+
+  color: var(--claro);
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background .2s ease,
+    transform .15s ease,
+    box-shadow .2s ease;
+}
+
+button:hover {
+  background: var(--vinho-hover);
+
+  box-shadow:
+    0 7px 18px rgba(87, 26, 26, .20);
+
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.btn-secundario {
+  background: var(--claro);
+
+  color: var(--vinho);
+
+  border: 1px solid var(--borda);
+}
+
+.btn-secundario:hover {
+  background: #E5D5D5;
+
+  color: var(--vinho-escuro);
+}
+
+.btn-tv {
+  background: var(--vinho);
+
+  color: var(--claro);
+}
+
+/* =========================================================
+   ÍCONE / LOGO
+   ========================================================= */
+
+.icone {
+  width: 54px;
+  height: 54px;
+
+  flex-shrink: 0;
+
+  border-radius: 15px;
+
+  background: var(--vinho);
+
+  color: var(--claro);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 25px;
+
+  box-shadow:
+    0 9px 22px rgba(87, 26, 26, .18);
+}
+
+/* =========================================================
+   DESCRIÇÃO
+   ========================================================= */
+
+.descricao {
+  background: var(--claro);
+
+  color: var(--texto-secundario);
+
+  padding: 14px 16px;
+
+  border-left: 4px solid var(--vinho);
+
+  border-radius: 10px;
+
+  margin-bottom: 24px;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.card {
+  background: var(--branco);
+
+  border: 1px solid var(--borda);
+
+  border-radius: var(--raio);
+
+  padding: 20px;
+
+  margin-bottom: 15px;
+
+  box-shadow:
+    0 7px 22px var(--sombra);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 28px rgba(87, 26, 26, .15);
+}
+
+.card h3 {
+  margin-top: 0;
+
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid var(--borda);
+}
+
+.card p {
+  color: var(--texto);
+
+  font-size: 14px;
+}
+
+.card small {
+  color: var(--texto-secundario);
+}
+
+/* =========================================================
+   FILA
+   ========================================================= */
+
+.fila-box {
+  background: rgba(238, 226, 226, .55);
+
+  border: 1px solid var(--borda);
+
+  border-radius: var(--raio);
+
+  padding: 22px;
+}
+
+.fila-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 18px;
+}
+
+.fila-header h3 {
+  margin: 0;
+}
+
+.fila-paciente {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 16px;
+
+  margin-bottom: 10px;
+
+  background: var(--branco);
+
+  border: 1px solid var(--borda);
+
+  border-radius: 11px;
+
+  box-shadow:
+    0 4px 12px rgba(87, 26, 26, .06);
+}
+
+.fila-paciente strong {
+  display: block;
+
+  color: var(--vinho);
+
+  margin-bottom: 4px;
+}
+
+.fila-paciente small {
+  color: var(--texto-secundario);
+}
+
+/* =========================================================
+   PACIENTE SELECIONADO
+   ========================================================= */
+
+.paciente-selecionado {
+  padding: 14px 16px;
+
+  margin-bottom: 18px;
+
+  background: var(--claro);
+
+  color: var(--vinho);
+
+  border: 1px solid var(--borda);
+
+  border-radius: 10px;
+
+  font-size: 14px;
+}
+
+.paciente-selecionado strong {
+  font-weight: 800;
+}
+
+/* =========================================================
+   RISCO
+   ========================================================= */
+
+.risco {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: .4px;
+
+  margin: 5px 0 10px;
+}
+
+.risco.baixo {
+  background: #DCEDE6;
+
+  color: #28604D;
+}
+
+.risco.medio {
+  background: #F1E5C8;
+
+  color: #77551B;
+}
+
+.risco.alto {
+  background: #F3D5D5;
+
+  color: #8C2929;
+}
+
+.risco.urgente {
+  background: var(--vinho);
+
+  color: var(--claro);
+
+  box-shadow:
+    0 5px 14px rgba(87, 26, 26, .20);
+}
+
+/* =========================================================
+   ESTADOS
+   ========================================================= */
+
+.vazio {
+  padding: 28px;
+
+  text-align: center;
+
+  color: var(--texto-secundario);
+
+  background: var(--claro);
+
+  border-radius: 11px;
+}
+
+.erro-texto {
+  padding: 14px;
+
+  border-radius: 10px;
+
+  background: #F5DEDE;
+
+  color: var(--erro);
+
+  font-weight: 650;
+}
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+body.login-page {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 100vh;
+
+  padding: 20px;
+}
+
+.login-wrapper {
+  width: 100%;
+
+  max-width: 440px;
+}
+
+.login-card {
+  position: relative;
+
+  overflow: hidden;
+
+  background: var(--branco);
+
+  border-radius: 22px;
+
+  padding: 40px;
+
+  text-align: center;
+
+  box-shadow:
+    0 30px 70px rgba(30, 5, 5, .28);
+}
+
+.login-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 6px;
+
+  background: var(--vinho);
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+
+  margin: 4px auto 20px;
+
+  border-radius: 50%;
+
+  background: var(--vinho);
+
+  color: var(--claro);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 36px;
+
+  box-shadow:
+    0 12px 28px rgba(87, 26, 26, .25);
+}
+
+.login-card h1 {
+  color: var(--vinho);
+
+  font-size: 26px;
+
+  margin: 0 0 5px;
+}
+
+.login-card .subtitulo {
+  color: var(--texto-secundario);
+
+  margin-bottom: 28px;
+}
+
+.login-card input {
+  text-align: left;
+}
+
+.login-card button {
+  width: 100%;
+
+  padding: 14px;
+
+  margin-top: 2px;
+}
+
+#mensagem {
+  min-height: 20px;
+
+  margin-top: 16px;
+
+  color: var(--erro);
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+.usuarios-teste {
+  margin-top: 25px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid var(--borda);
+
+  text-align: left;
+}
+
+.usuarios-teste strong {
+  color: var(--vinho);
+}
+
+.usuarios-teste p {
+  color: var(--texto-secundario);
+
+  font-size: 13px;
+
+  margin: 7px 0;
+}
+
+/* =========================================================
+   CONSULTAS
+   ========================================================= */
+
+#consultas {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(300px, 1fr));
+
+  gap: 16px;
+}
+
+#consultas .card {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
    ========================================================= */
 
 @media (min-width: 1024px) {
 
   .container {
-    width: 100vw !important;
-    min-width: 100vw !important;
-    max-width: none !important;
-
-    height: 100vh !important;
-    min-height: 100vh !important;
-
-    padding-left: 310px;
-    padding-right: 40px;
+    padding: 40px 55px;
   }
 
 }
-
-
-/* =========================================================
-   NOTEBOOK
-   ========================================================= */
-
-@media (min-width: 1024px) and (max-width: 1365px) {
-
-  .container {
-    padding-left: 295px;
-    padding-right: 30px;
-  }
-
-  .container::before,
-  .container::after {
-    width: 250px;
-  }
-
-}
-
-
-/* =========================================================
-   FULL HD
-   ========================================================= */
 
 @media (min-width: 1600px) {
 
   .container {
-    width: 100vw !important;
-    min-width: 100vw !important;
-    max-width: none !important;
-
-    padding-left: 320px;
-    padding-right: 60px;
+    padding-left: 80px;
+    padding-right: 80px;
   }
 
 }
 
-
-/* =========================================================
-   MONITOR 1920+
-   ========================================================= */
-
-@media (min-width: 1920px) {
+@media (max-width: 700px) {
 
   .container {
-    width: 100vw !important;
-    min-width: 100vw !important;
-    max-width: none !important;
-
-    padding-left: 340px;
-    padding-right: 80px;
+    padding: 22px 16px;
   }
 
+  .topo,
+  .pagina-header,
+  .fila-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .acoes {
+    width: 100%;
+  }
+
+  .acoes button {
+    flex: 1;
+  }
+
+  .fila-paciente {
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+
+  .fila-paciente button {
+    width: 100%;
+  }
+
+  .login-card {
+    padding: 30px 22px;
+  }
+
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--claro);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vinho);
+
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vinho-hover);
 }
