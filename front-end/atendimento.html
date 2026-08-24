@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Atendimento | Gestão Clínica</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        .pagina-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+        }
+
+        .pagina-header h2 {
+            margin: 0;
+        }
+
+        .icone {
+            width: 50px;
+            height: 50px;
+
+            border-radius: 12px;
+
+            background: #571A1A;
+
+            color: #F4F7F6;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 24px;
+        }
+
+        .descricao {
+            background: #E8EEEC;
+
+            color: #746969;
+
+            padding: 13px 15px;
+
+            border-radius: 10px;
+
+            margin-bottom: 22px;
+
+            font-size: 14px;
+        }
+
+        .campo-label {
+            display: block;
+
+            color: #571A1A;
+
+            font-weight: 750;
+
+            margin-bottom: 7px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="pagina-header">
+
+        <div>
+
+            <h2>
+                Atendimento
+            </h2>
+
+            <p style="color:#746969;">
+                Cadastro e recepção de pacientes
+            </p>
+
+        </div>
+
+        <div class="icone">
+            🏥
+        </div>
+
+    </div>
+
+
+    <div class="descricao">
+
+        Preencha os dados do paciente para
+        encaminhá-lo à fila de triagem.
+
+    </div>
+
+
+    <label class="campo-label">
+        Nome do paciente
+    </label>
+
+    <input
+        id="nome"
+        placeholder="Digite o nome completo"
+    >
+
+
+    <label class="campo-label">
+        CPF
+    </label>
+
+    <input
+        id="cpf"
+        placeholder="Digite o CPF"
+    >
+
+
+    <label class="campo-label">
+        Tipo de atendimento
+    </label>
+
+    <select id="tipo">
+
+        <option value="Convenio">
+            Convênio
+        </option>
+
+        <option value="Particular">
+            Particular
+        </option>
+
+    </select>
+
+
+    <label class="campo-label">
+        Documento / Foto
+    </label>
+
+    <input
+        type="file"
+        id="foto"
+        accept="image/*"
+    >
+
+
+    <button
+        onclick="cadastrar()"
+        style="width:100%; margin-top:5px;"
+    >
+        Cadastrar paciente
+    </button>
+
+</div>
+
+
+<script>
+
+async function cadastrar() {
+
+    const nome =
+        document.getElementById("nome")
+        .value
+        .trim();
+
+    const cpf =
+        document.getElementById("cpf")
+        .value
+        .trim();
+
+    const tipo =
+        document.getElementById("tipo")
+        .value;
+
+
+    if (!nome) {
+
+        alert("Digite o nome do paciente.");
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch("/atendimento", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    nome,
+                    cpf,
+                    tipo
+
+                })
+
+            });
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.erro ||
+                "Erro ao cadastrar paciente."
+            );
+
+        }
+
+
+        alert(
+            "✅ Paciente cadastrado com sucesso!\n\n" +
+            "Paciente enviado para a triagem."
+        );
+
+
+        document
+            .getElementById("nome")
+            .value = "";
+
+        document
+            .getElementById("cpf")
+            .value = "";
+
+        document
+            .getElementById("tipo")
+            .value = "Convenio";
+
+        document
+            .getElementById("foto")
+            .value = "";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "❌ " +
+            error.message
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

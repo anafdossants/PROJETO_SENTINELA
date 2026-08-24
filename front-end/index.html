@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sistema de Gestão Clínica</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 100vh;
+
+            padding: 20px;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .login-card {
+            background: #F4F7F6;
+
+            border-radius: 22px;
+
+            padding: 38px;
+
+            box-shadow:
+                0 25px 60px rgba(30, 5, 5, .35);
+
+            text-align: center;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 6px;
+
+            background: #571A1A;
+        }
+
+        .logo {
+            width: 78px;
+            height: 78px;
+
+            margin: 5px auto 20px;
+
+            border-radius: 50%;
+
+            background: #571A1A;
+
+            color: #F4F7F6;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 36px;
+
+            box-shadow:
+                0 10px 25px rgba(87,26,26,.25);
+        }
+
+        .login-card h1 {
+            color: #571A1A;
+
+            font-size: 26px;
+
+            margin-bottom: 5px;
+        }
+
+        .login-card .subtitulo {
+            color: #746969;
+
+            margin-bottom: 28px;
+
+            font-size: 14px;
+        }
+
+        .login-card input {
+            text-align: left;
+        }
+
+        .login-card button {
+            width: 100%;
+
+            margin-top: 5px;
+
+            padding: 14px;
+        }
+
+        #mensagem {
+            margin-top: 16px;
+
+            color: #8f1717;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            min-height: 20px;
+        }
+
+        .usuarios-teste {
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid rgba(87,26,26,.12);
+
+            text-align: left;
+        }
+
+        .usuarios-teste strong {
+            color: #571A1A;
+        }
+
+        .usuarios-teste p {
+            font-size: 13px;
+
+            margin-top: 6px;
+
+            color: #746969;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <div class="logo">
+            🏥
+        </div>
+
+        <h1>
+            Sistema de Gestão Clínica
+        </h1>
+
+        <p class="subtitulo">
+            Acesso ao sistema hospitalar
+        </p>
+
+        <input
+            id="usuario"
+            type="text"
+            placeholder="Usuário"
+            autocomplete="username"
+        >
+
+        <input
+            id="senha"
+            type="password"
+            placeholder="Senha"
+            autocomplete="current-password"
+        >
+
+        <button onclick="login()">
+            Entrar
+        </button>
+
+        <div id="mensagem"></div>
+
+        <div class="usuarios-teste">
+
+            <strong>
+                Usuários de teste
+            </strong>
+
+            <p>
+                Atendimento:
+                atendimento / 123
+            </p>
+
+            <p>
+                Triagem:
+                triagem / 123
+            </p>
+
+            <p>
+                Médico:
+                medico / 123
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function login() {
+
+    const usuario =
+        document.getElementById("usuario")
+        .value
+        .trim();
+
+    const senha =
+        document.getElementById("senha")
+        .value
+        .trim();
+
+    const mensagem =
+        document.getElementById("mensagem");
+
+
+    mensagem.textContent = "";
+
+
+    if (!usuario || !senha) {
+
+        mensagem.textContent =
+            "Informe usuário e senha.";
+
+        return;
+    }
+
+
+    fetch("/login", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            usuario,
+            senha
+        })
+
+    })
+
+    .then(async response => {
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.erro ||
+                "Usuário ou senha inválidos."
+            );
+
+        }
+
+        return data;
+
+    })
+
+    .then(data => {
+
+        const tipo =
+            data.usuario &&
+            data.usuario.tipo;
+
+
+        if (tipo === "triagem") {
+
+            window.location.href =
+                "triagem.html";
+
+        }
+
+        else if (tipo === "medico") {
+
+            window.location.href =
+                "medico.html";
+
+        }
+
+        else if (tipo === "atendimento") {
+
+            window.location.href =
+                "atendimento.html";
+
+        }
+
+        else {
+
+            mensagem.textContent =
+                "Tipo de usuário não reconhecido.";
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        mensagem.textContent =
+            error.message ||
+            "Não foi possível realizar o login.";
+
+    });
+
+}
+
+document
+    .getElementById("senha")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+
+            login();
+
+        }
+
+    });
+
+</script>
+
+</body>
+
+</html>

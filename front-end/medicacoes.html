@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Consultas</title>
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="topo">
+
+    <div>
+
+      <h2>💊 Consultas realizadas</h2>
+
+      <p class="subtitulo">
+        Histórico de atendimentos médicos
+      </p>
+
+    </div>
+
+    <button
+      class="btn-secundario"
+      onclick="location.href='index.html'"
+    >
+      Sair
+    </button>
+
+  </div>
+
+  <hr>
+
+  <div id="consultas">
+    Carregando...
+  </div>
+
+</div>
+
+<script>
+
+function carregar() {
+
+  fetch("/medicacoes")
+
+    .then(r => r.json())
+
+    .then(data => {
+
+      const div =
+        document.getElementById(
+          "consultas"
+        );
+
+      if (!data.length) {
+
+        div.innerHTML =
+          `<p class="vazio">
+            Nenhuma consulta realizada.
+          </p>`;
+
+        return;
+      }
+
+      div.innerHTML = "";
+
+      [...data]
+        .reverse()
+        .forEach(consulta => {
+
+          const card =
+            document.createElement(
+              "div"
+            );
+
+          card.className =
+            "card";
+
+          card.innerHTML = `
+
+            <h3>
+              ${escapeHTML(
+                consulta.paciente
+              )}
+            </h3>
+
+            <p>
+              <b>Diagnóstico:</b>
+              ${escapeHTML(
+                consulta.diagnostico
+              )}
+            </p>
+
+            <p>
+              <b>Medicação:</b>
+              ${escapeHTML(
+                consulta.medicacao
+              )}
+            </p>
+
+            <p>
+              <b>Observações:</b>
+              ${escapeHTML(
+                consulta.obs ||
+                "Nenhuma"
+              )}
+            </p>
+
+            <small>
+              ${new Date(
+                consulta.createdAt
+              ).toLocaleString("pt-BR")}
+            </small>
+
+          `;
+
+          div.appendChild(card);
+
+        });
+
+    })
+
+    .catch(error => {
+
+      document.getElementById(
+        "consultas"
+      ).innerHTML =
+        `<p class="erro-texto">
+          ❌ Erro ao carregar consultas.
+        </p>`;
+
+    });
+}
+
+function escapeHTML(valor) {
+
+  return String(valor || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+carregar();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Painel Médico</title>
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="topo">
+
+    <div>
+
+      <h2>🩺 Painel Médico</h2>
+
+      <p class="subtitulo">
+        Pacientes aguardando consulta
+      </p>
+
+    </div>
+
+    <button
+      class="btn-secundario"
+      onclick="location.href='index.html'"
+    >
+      Sair
+    </button>
+
+  </div>
+
+  <hr>
+
+  <div class="fila-header">
+
+    <h3>
+      Fila médica
+    </h3>
+
+    <button
+      class="btn-secundario"
+      onclick="carregarTriagens()"
+    >
+      🔄 Atualizar
+    </button>
+
+  </div>
+
+  <div id="triagens">
+    Carregando...
+  </div>
+
+  <hr>
+
+  <h3>Consulta</h3>
+
+  <div
+    id="pacienteSelecionado"
+    class="paciente-selecionado"
+  >
+    Nenhum paciente selecionado.
+  </div>
+
+  <input
+    id="paciente"
+    placeholder="Paciente"
+    readonly
+  >
+
+  <input
+    id="diagnostico"
+    placeholder="Diagnóstico"
+  >
+
+  <select id="medicacao">
+
+    <option value="">
+      Selecione a medicação
+    </option>
+
+  </select>
+
+  <textarea
+    id="obs"
+    placeholder="Observações"
+  ></textarea>
+
+  <button onclick="salvarConsulta()">
+    Finalizar consulta
+  </button>
+
+</div>
+
+<script>
+
+let triagens =
+  [];
+
+let selecionado =
+  null;
+
+// ======================================================
+// CARREGAR TRIAGENS
+// ======================================================
+
+function carregarTriagens() {
+
+  fetch("/triagens/aguardando")
+
+    .then(response => {
+
+      if (!response.ok) {
+        throw new Error(
+          "Erro ao carregar fila médica."
+        );
+      }
+
+      return response.json();
+
+    })
+
+    .then(data => {
+
+      triagens =
+        data;
+
+      const div =
+        document.getElementById(
+          "triagens"
+        );
+
+      if (!data.length) {
+
+        div.innerHTML =
+          `<p class="vazio">
+            Nenhum paciente aguardando médico.
+          </p>`;
+
+        return;
+      }
+
+      div.innerHTML = "";
+
+      data.forEach(
+        (triagem, index) => {
+
+          const card =
+            document.createElement(
+              "div"
+            );
+
+          card.className =
+            "card";
+
+          card.innerHTML = `
+
+            <h3>
+              ${escapeHTML(
+                triagem.nome
+              )}
+            </h3>
+
+            <p>
+              <b>CPF:</b>
+              ${escapeHTML(
+                triagem.cpf || "-"
+              )}
+            </p>
+
+            <p>
+              <b>Tipo:</b>
+              ${escapeHTML(
+                triagem.tipo || "-"
+              )}
+            </p>
+
+            <p>
+              <b>Sintoma:</b>
+              ${escapeHTML(
+                triagem.sintoma
+              )}
+            </p>
+
+            <p>
+              <b>Temperatura:</b>
+              ${triagem.temperatura} °C
+            </p>
+
+            <p>
+              <b>Risco:</b>
+              <span class="risco ${triagem.risco}">
+                ${triagem.risco.toUpperCase()}
+              </span>
+            </p>
+
+            <p>
+              <b>Alergia:</b>
+              ${escapeHTML(
+                triagem.alergia ||
+                "Nenhuma"
+              )}
+            </p>
+
+            <p>
+              <b>Observação:</b>
+              ${escapeHTML(
+                triagem.observacao ||
+                "Nenhuma"
+              )}
+            </p>
+
+            <button
+              onclick="selecionar(${index})"
+            >
+              Atender paciente
+            </button>
+
+          `;
+
+          div.appendChild(card);
+        }
+      );
+
+    })
+
+    .catch(error => {
+
+      document.getElementById(
+        "triagens"
+      ).innerHTML =
+        `<p class="erro-texto">
+          ❌ ${error.message}
+        </p>`;
+
+    });
+}
+
+// ======================================================
+// SELECIONAR
+// ======================================================
+
+function selecionar(index) {
+
+  selecionado =
+    triagens[index];
+
+  document.getElementById(
+    "paciente"
+  ).value =
+    selecionado.nome;
+
+  document.getElementById(
+    "obs"
+  ).value =
+    selecionado.observacao || "";
+
+  document.getElementById(
+    "pacienteSelecionado"
+  ).innerHTML =
+
+    "✅ Paciente selecionado: " +
+    `<strong>${escapeHTML(
+      selecionado.nome
+    )}</strong>`;
+
+  if (
+    selecionado.alergia
+  ) {
+
+    alert(
+      "⚠️ Atenção!\n\n" +
+      "Alergia informada: " +
+      selecionado.alergia
+    );
+  }
+
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth"
+  });
+}
+
+// ======================================================
+// MEDICAÇÕES
+// ======================================================
+
+function carregarMedicacoes() {
+
+  fetch("/lista-medicacoes")
+
+    .then(r => r.json())
+
+    .then(data => {
+
+      const select =
+        document.getElementById(
+          "medicacao"
+        );
+
+      select.innerHTML =
+        `<option value="">
+          Selecione a medicação
+        </option>`;
+
+      data.forEach(medicacao => {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+        option.value =
+          medicacao;
+
+        option.textContent =
+          medicacao;
+
+        select.appendChild(
+          option
+        );
+      });
+
+    });
+}
+
+// ======================================================
+// SALVAR CONSULTA
+// ======================================================
+
+function salvarConsulta() {
+
+  if (!selecionado) {
+
+    alert(
+      "Selecione um paciente."
+    );
+
+    return;
+  }
+
+  const diagnostico =
+    document.getElementById(
+      "diagnostico"
+    )
+      .value
+      .trim();
+
+  const medicacao =
+    document.getElementById(
+      "medicacao"
+    ).value;
+
+  const obs =
+    document.getElementById(
+      "obs"
+    )
+      .value
+      .trim();
+
+  if (!diagnostico) {
+
+    alert(
+      "Digite o diagnóstico."
+    );
+
+    return;
+  }
+
+  if (!medicacao) {
+
+    alert(
+      "Selecione uma medicação."
+    );
+
+    return;
+  }
+
+  fetch("/consulta", {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type":
+        "application/json"
+    },
+
+    body: JSON.stringify({
+
+      pacienteId:
+        selecionado.pacienteId,
+
+      paciente:
+        selecionado.nome,
+
+      diagnostico,
+
+      medicacao,
+
+      obs
+
+    })
+
+  })
+
+  .then(async response => {
+
+    const data =
+      await response.json();
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.erro ||
+        "Erro ao finalizar consulta."
+      );
+    }
+
+    return data;
+
+  })
+
+  .then(() => {
+
+    alert(
+      "✅ Consulta finalizada com sucesso!"
+    );
+
+    limparConsulta();
+
+    carregarTriagens();
+
+  })
+
+  .catch(error => {
+
+    alert(
+      "❌ " +
+      error.message
+    );
+
+  });
+}
+
+// ======================================================
+// LIMPAR
+// ======================================================
+
+function limparConsulta() {
+
+  selecionado =
+    null;
+
+  document.getElementById(
+    "paciente"
+  ).value = "";
+
+  document.getElementById(
+    "diagnostico"
+  ).value = "";
+
+  document.getElementById(
+    "medicacao"
+  ).value = "";
+
+  document.getElementById(
+    "obs"
+  ).value = "";
+
+  document.getElementById(
+    "pacienteSelecionado"
+  ).innerHTML =
+    "Nenhum paciente selecionado.";
+}
+
+// ======================================================
+// SEGURANÇA
+// ======================================================
+
+function escapeHTML(valor) {
+
+  return String(valor || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+// ======================================================
+// INICIAR
+// ======================================================
+
+carregarTriagens();
+carregarMedicacoes();
+
+setInterval(
+  carregarTriagens,
+  5000
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,146 @@
+/* =========================================================
+   FORÇAR SISTEMA EM TELA CHEIA
+   ========================================================= */
+
+html,
+body {
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Container principal ocupa toda a janela */
+.container {
+  position: relative;
+
+  width: 100vw !important;
+  min-width: 100vw !important;
+  max-width: none !important;
+
+  height: 100vh !important;
+  min-height: 100vh !important;
+
+  margin: 0 !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+
+  box-shadow: none !important;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Evita que elementos internos criem uma "caixa" central */
+.container > * {
+  max-width: none;
+}
+
+/* Menu lateral sempre encostado nas bordas */
+.container::before {
+  position: fixed !important;
+
+  top: 0 !important;
+  left: 0 !important;
+
+  height: 100vh !important;
+}
+
+/* Barra superior do menu */
+.container::after {
+  position: fixed !important;
+
+  top: 0 !important;
+  left: 0 !important;
+}
+
+/* Cards ocupam a área disponível */
+.card,
+.pacientes-fila,
+#resultado,
+table {
+  max-width: none;
+}
+
+/* =========================================================
+   TELAS GRANDES
+   ========================================================= */
+
+@media (min-width: 1024px) {
+
+  .container {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: none !important;
+
+    height: 100vh !important;
+    min-height: 100vh !important;
+
+    padding-left: 310px;
+    padding-right: 40px;
+  }
+
+}
+
+
+/* =========================================================
+   NOTEBOOK
+   ========================================================= */
+
+@media (min-width: 1024px) and (max-width: 1365px) {
+
+  .container {
+    padding-left: 295px;
+    padding-right: 30px;
+  }
+
+  .container::before,
+  .container::after {
+    width: 250px;
+  }
+
+}
+
+
+/* =========================================================
+   FULL HD
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+  .container {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: none !important;
+
+    padding-left: 320px;
+    padding-right: 60px;
+  }
+
+}
+
+
+/* =========================================================
+   MONITOR 1920+
+   ========================================================= */
+
+@media (min-width: 1920px) {
+
+  .container {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: none !important;
+
+    padding-left: 340px;
+    padding-right: 80px;
+  }
+
+}
