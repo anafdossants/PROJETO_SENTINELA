@@ -12,75 +12,20 @@
 
     <title>Atendimento | Gestão Clínica</title>
 
-    <link rel="stylesheet" href="css/style.css">
-
-    <style>
-
-        .pagina-header {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 15px;
-
-            margin-bottom: 25px;
-        }
-
-        .pagina-header h2 {
-            margin: 0;
-        }
-
-        .icone {
-            width: 50px;
-            height: 50px;
-
-            border-radius: 12px;
-
-            background: #571A1A;
-
-            color: #F4F7F6;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            font-size: 24px;
-        }
-
-        .descricao {
-            background: #E8EEEC;
-
-            color: #746969;
-
-            padding: 13px 15px;
-
-            border-radius: 10px;
-
-            margin-bottom: 22px;
-
-            font-size: 14px;
-        }
-
-        .campo-label {
-            display: block;
-
-            color: #571A1A;
-
-            font-weight: 750;
-
-            margin-bottom: 7px;
-        }
-
-    </style>
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 
 </head>
 
 <body>
 
 <div class="container">
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
 
     <div class="pagina-header">
 
@@ -90,7 +35,7 @@
                 Atendimento
             </h2>
 
-            <p style="color:#746969;">
+            <p class="subtitulo">
                 Cadastro e recepção de pacientes
             </p>
 
@@ -103,6 +48,10 @@
     </div>
 
 
+    <!-- =====================================================
+         DESCRIÇÃO
+         ===================================================== -->
+
     <div class="descricao">
 
         Preencha os dados do paciente para
@@ -111,27 +60,53 @@
     </div>
 
 
-    <label class="campo-label">
+    <!-- =====================================================
+         NOME
+         ===================================================== -->
+
+    <label
+        class="campo-label"
+        for="nome"
+    >
         Nome do paciente
     </label>
 
     <input
         id="nome"
+        type="text"
         placeholder="Digite o nome completo"
+        autocomplete="name"
     >
 
 
-    <label class="campo-label">
+    <!-- =====================================================
+         CPF
+         ===================================================== -->
+
+    <label
+        class="campo-label"
+        for="cpf"
+    >
         CPF
     </label>
 
     <input
         id="cpf"
+        type="text"
         placeholder="Digite o CPF"
+        inputmode="numeric"
+        autocomplete="off"
     >
 
 
-    <label class="campo-label">
+    <!-- =====================================================
+         TIPO DE ATENDIMENTO
+         ===================================================== -->
+
+    <label
+        class="campo-label"
+        for="tipo"
+    >
         Tipo de atendimento
     </label>
 
@@ -148,7 +123,14 @@
     </select>
 
 
-    <label class="campo-label">
+    <!-- =====================================================
+         DOCUMENTO / FOTO
+         ===================================================== -->
+
+    <label
+        class="campo-label"
+        for="foto"
+    >
         Documento / Foto
     </label>
 
@@ -159,9 +141,14 @@
     >
 
 
+    <!-- =====================================================
+         BOTÃO
+         ===================================================== -->
+
     <button
+        type="button"
         onclick="cadastrar()"
-        style="width:100%; margin-top:5px;"
+        style="width:100%;"
     >
         Cadastrar paciente
     </button>
@@ -174,54 +161,78 @@
 async function cadastrar() {
 
     const nome =
-        document.getElementById("nome")
-        .value
-        .trim();
+        document
+            .getElementById("nome")
+            .value
+            .trim();
 
     const cpf =
-        document.getElementById("cpf")
-        .value
-        .trim();
+        document
+            .getElementById("cpf")
+            .value
+            .trim();
 
     const tipo =
-        document.getElementById("tipo")
-        .value;
+        document
+            .getElementById("tipo")
+            .value;
 
+
+    /* ======================================================
+       VALIDAÇÃO
+       ====================================================== */
 
     if (!nome) {
 
-        alert("Digite o nome do paciente.");
+        alert(
+            "Digite o nome do paciente."
+        );
+
+        document
+            .getElementById("nome")
+            .focus();
 
         return;
     }
 
 
+    /* ======================================================
+       ENVIO PARA O SERVIDOR
+       ====================================================== */
+
     try {
 
         const response =
-            await fetch("/atendimento", {
+            await fetch(
+                "/atendimento",
+                {
 
-                method: "POST",
+                    method: "POST",
 
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-                body: JSON.stringify({
+                    body: JSON.stringify({
 
-                    nome,
-                    cpf,
-                    tipo
+                        nome,
+                        cpf,
+                        tipo
 
-                })
+                    })
 
-            });
+                }
+            );
 
 
         const data =
             await response.json();
 
+
+        /* ==================================================
+           ERRO DA API
+           ================================================== */
 
         if (!response.ok) {
 
@@ -233,11 +244,19 @@ async function cadastrar() {
         }
 
 
+        /* ==================================================
+           SUCESSO
+           ================================================== */
+
         alert(
             "✅ Paciente cadastrado com sucesso!\n\n" +
             "Paciente enviado para a triagem."
         );
 
+
+        /* ==================================================
+           LIMPAR FORMULÁRIO
+           ================================================== */
 
         document
             .getElementById("nome")
@@ -256,13 +275,24 @@ async function cadastrar() {
             .value = "";
 
 
+        document
+            .getElementById("nome")
+            .focus();
+
+
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Erro ao cadastrar paciente:",
+            error
+        );
 
         alert(
             "❌ " +
-            error.message
+            (
+                error.message ||
+                "Não foi possível cadastrar o paciente."
+            )
         );
 
     }
