@@ -12,146 +12,14 @@
 
     <title>Sistema de Gestão Clínica</title>
 
-    <link rel="stylesheet" href="css/style.css">
-
-    <style>
-
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            min-height: 100vh;
-
-            padding: 20px;
-        }
-
-        .login-wrapper {
-            width: 100%;
-            max-width: 430px;
-        }
-
-        .login-card {
-            background: #F4F7F6;
-
-            border-radius: 22px;
-
-            padding: 38px;
-
-            box-shadow:
-                0 25px 60px rgba(30, 5, 5, .35);
-
-            text-align: center;
-
-            position: relative;
-
-            overflow: hidden;
-        }
-
-        .login-card::before {
-            content: "";
-
-            position: absolute;
-
-            top: 0;
-            left: 0;
-
-            width: 100%;
-            height: 6px;
-
-            background: #571A1A;
-        }
-
-        .logo {
-            width: 78px;
-            height: 78px;
-
-            margin: 5px auto 20px;
-
-            border-radius: 50%;
-
-            background: #571A1A;
-
-            color: #F4F7F6;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            font-size: 36px;
-
-            box-shadow:
-                0 10px 25px rgba(87,26,26,.25);
-        }
-
-        .login-card h1 {
-            color: #571A1A;
-
-            font-size: 26px;
-
-            margin-bottom: 5px;
-        }
-
-        .login-card .subtitulo {
-            color: #746969;
-
-            margin-bottom: 28px;
-
-            font-size: 14px;
-        }
-
-        .login-card input {
-            text-align: left;
-        }
-
-        .login-card button {
-            width: 100%;
-
-            margin-top: 5px;
-
-            padding: 14px;
-        }
-
-        #mensagem {
-            margin-top: 16px;
-
-            color: #8f1717;
-
-            font-size: 14px;
-
-            font-weight: bold;
-
-            min-height: 20px;
-        }
-
-        .usuarios-teste {
-            margin-top: 25px;
-
-            padding-top: 20px;
-
-            border-top: 1px solid rgba(87,26,26,.12);
-
-            text-align: left;
-        }
-
-        .usuarios-teste strong {
-            color: #571A1A;
-        }
-
-        .usuarios-teste p {
-            font-size: 13px;
-
-            margin-top: 6px;
-
-            color: #746969;
-        }
-
-    </style>
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 
 </head>
 
-<body>
+<body class="login-page">
 
 <div class="login-wrapper">
 
@@ -222,18 +90,19 @@
 function login() {
 
     const usuario =
-        document.getElementById("usuario")
-        .value
-        .trim();
+        document
+            .getElementById("usuario")
+            .value
+            .trim();
 
     const senha =
-        document.getElementById("senha")
-        .value
-        .trim();
+        document
+            .getElementById("senha")
+            .value
+            .trim();
 
     const mensagem =
         document.getElementById("mensagem");
-
 
     mensagem.textContent = "";
 
@@ -252,19 +121,23 @@ function login() {
         method: "POST",
 
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type":
+                "application/json"
         },
 
         body: JSON.stringify({
+
             usuario,
             senha
+
         })
 
     })
 
     .then(async response => {
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         if (!response.ok) {
 
@@ -328,17 +201,25 @@ function login() {
 
 }
 
+
+/* ======================================================
+   ENTER PARA LOGIN
+   ====================================================== */
+
 document
     .getElementById("senha")
-    .addEventListener("keydown", function(event) {
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-        if (event.key === "Enter") {
+            if (event.key === "Enter") {
 
-            login();
+                login();
+
+            }
 
         }
-
-    });
+    );
 
 </script>
 
