@@ -1,28 +1,24 @@
-/* =========================================================
-   SISTEMA DE GESTÃO CLÍNICA
-   TEMA ELEGANTE — #571A1A / #EEE2E2
-   ========================================================= */
-
 :root {
-  --vinho: #571A1A;
-  --vinho-hover: #6D2424;
-  --vinho-escuro: #3E1010;
+    --principal: #571A1A;
+    --principal-hover: #6D2424;
+    --principal-escuro: #3D1010;
 
-  --claro: #EEE2E2;
-  --fundo: #F7F2F2;
-  --branco: #FFFFFF;
+    --claro: #EEE2E2;
 
-  --texto: #3A2525;
-  --texto-secundario: #806D6D;
+    --fundo: #F7F2F2;
+    --branco: #FFFFFF;
 
-  --borda: #DCCACA;
-  --sombra: rgba(87, 26, 26, 0.12);
+    --texto: #3A2525;
+    --texto-suave: #806D6D;
 
-  --sucesso: #3F7560;
-  --alerta: #A97828;
-  --erro: #9B3030;
+    --borda: #D9C4C4;
 
-  --raio: 14px;
+    --verde: #467A64;
+    --amarelo: #9A742B;
+    --vermelho: #9B3030;
+
+    --sombra:
+        0 8px 25px rgba(87, 26, 26, .10);
 }
 
 /* =========================================================
@@ -30,145 +26,128 @@
    ========================================================= */
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html,
 body {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+    min-height: 100%;
+
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
 
-  background:
-    linear-gradient(
-      135deg,
-      #571A1A 0%,
-      #461313 45%,
-      #EEE2E2 100%
-    );
+    background: var(--fundo);
 
-  color: var(--texto);
+    color: var(--texto);
 
-  min-height: 100vh;
-
-  overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* =========================================================
-   CONTAINER PRINCIPAL
+   TELA CHEIA
    ========================================================= */
 
 .container {
-  position: relative;
+    width: 100vw !important;
+    min-width: 100vw !important;
 
-  width: 100%;
-  min-height: 100vh;
+    min-height: 100vh !important;
 
-  margin: 0;
+    margin: 0 !important;
 
-  padding: 40px;
+    padding: 38px 55px;
 
-  background: var(--fundo);
+    background: var(--fundo);
 
-  border-radius: 0;
+    border: none !important;
+    border-radius: 0 !important;
 
-  box-shadow: none;
-
-  overflow-x: hidden;
-  overflow-y: auto;
+    box-shadow: none !important;
 }
 
 /* =========================================================
-   TIPOGRAFIA
+   CABEÇALHO
+   ========================================================= */
+
+.topo,
+.pagina-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 25px;
+}
+
+.topo h2,
+.pagina-header h2 {
+    margin: 0;
+
+    color: var(--principal);
+
+    font-size: 27px;
+
+    font-weight: 800;
+
+    letter-spacing: -.5px;
+}
+
+.subtitulo {
+    margin-top: 6px;
+
+    color: var(--texto-suave);
+
+    font-size: 14px;
+}
+
+.acoes {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+/* =========================================================
+   LINHA
+   ========================================================= */
+
+hr {
+    border: 0;
+
+    border-top: 1px solid var(--borda);
+
+    margin: 28px 0;
+}
+
+/* =========================================================
+   TÍTULOS
    ========================================================= */
 
 h1,
 h2,
 h3,
 h4 {
-  color: var(--vinho);
-
-  font-weight: 750;
-
-  letter-spacing: -0.4px;
-}
-
-h1 {
-  font-size: 28px;
-}
-
-h2 {
-  font-size: 26px;
+    color: var(--principal);
 }
 
 h3 {
-  font-size: 19px;
-}
-
-p {
-  line-height: 1.6;
-}
-
-.subtitulo {
-  color: var(--texto-secundario);
-
-  font-size: 14px;
-
-  margin-top: 5px;
-}
-
-/* =========================================================
-   TOPO
-   ========================================================= */
-
-.topo,
-.pagina-header {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 20px;
-
-  margin-bottom: 25px;
-}
-
-.topo h2,
-.pagina-header h2 {
-  margin: 0;
-}
-
-.acoes {
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-}
-
-/* =========================================================
-   LINHAS
-   ========================================================= */
-
-hr {
-  border: 0;
-
-  border-top: 1px solid var(--borda);
-
-  margin: 28px 0;
+    font-size: 19px;
 }
 
 /* =========================================================
@@ -177,64 +156,64 @@ hr {
 
 label,
 .campo-label {
-  display: block;
+    display: block;
 
-  color: var(--vinho);
+    margin-bottom: 7px;
 
-  font-weight: 700;
+    color: var(--principal);
 
-  margin-bottom: 7px;
+    font-weight: 750;
 }
 
 input,
 select,
 textarea {
-  width: 100%;
+    width: 100%;
 
-  padding: 13px 15px;
+    padding: 13px 15px;
 
-  margin-bottom: 17px;
+    margin-bottom: 17px;
 
-  border: 1px solid var(--borda);
+    border: 1px solid var(--borda);
 
-  border-radius: 10px;
+    border-radius: 10px;
 
-  background: var(--branco);
+    background: var(--branco);
 
-  color: var(--texto);
+    color: var(--texto);
 
-  font-family: inherit;
+    font-family: inherit;
 
-  font-size: 14px;
+    font-size: 14px;
 
-  outline: none;
+    outline: none;
 
-  transition:
-    border-color .2s ease,
-    box-shadow .2s ease,
-    background .2s ease;
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        background .2s;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #A18D8D;
+    color: #9A8787;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--vinho);
+    border-color: var(--principal);
 
-  box-shadow:
-    0 0 0 3px rgba(87, 26, 26, .10);
+    box-shadow:
+        0 0 0 3px rgba(87, 26, 26, .10);
 
-  background: #FFFDFD;
+    background: #FFFDFD;
 }
 
 textarea {
-  min-height: 110px;
+    min-height: 110px;
 
-  resize: vertical;
+    resize: vertical;
 }
 
 /* =========================================================
@@ -242,88 +221,88 @@ textarea {
    ========================================================= */
 
 button {
-  border: 0;
+    border: none;
 
-  border-radius: 10px;
+    border-radius: 10px;
 
-  padding: 12px 18px;
+    padding: 12px 19px;
 
-  background: var(--vinho);
+    background: var(--principal);
 
-  color: var(--claro);
+    color: var(--claro);
 
-  font-family: inherit;
+    font-family: inherit;
 
-  font-size: 14px;
+    font-size: 14px;
 
-  font-weight: 700;
+    font-weight: 750;
 
-  cursor: pointer;
+    cursor: pointer;
 
-  transition:
-    background .2s ease,
-    transform .15s ease,
-    box-shadow .2s ease;
+    transition:
+        background .2s,
+        transform .15s,
+        box-shadow .2s;
 }
 
 button:hover {
-  background: var(--vinho-hover);
+    background: var(--principal-hover);
 
-  box-shadow:
-    0 7px 18px rgba(87, 26, 26, .20);
+    box-shadow:
+        0 7px 18px rgba(87, 26, 26, .20);
 
-  transform: translateY(-1px);
+    transform: translateY(-1px);
 }
 
 button:active {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
 .btn-secundario {
-  background: var(--claro);
+    background: var(--claro);
 
-  color: var(--vinho);
+    color: var(--principal);
 
-  border: 1px solid var(--borda);
+    border: 1px solid var(--borda);
 }
 
 .btn-secundario:hover {
-  background: #E5D5D5;
+    background: #E4D2D2;
 
-  color: var(--vinho-escuro);
+    color: var(--principal-escuro);
 }
 
 .btn-tv {
-  background: var(--vinho);
+    background: var(--principal);
 
-  color: var(--claro);
+    color: var(--claro);
 }
 
 /* =========================================================
-   ÍCONE / LOGO
+   ÍCONE
    ========================================================= */
 
 .icone {
-  width: 54px;
-  height: 54px;
+    width: 54px;
+    height: 54px;
 
-  flex-shrink: 0;
+    flex-shrink: 0;
 
-  border-radius: 15px;
+    display: flex;
 
-  background: var(--vinho);
+    align-items: center;
+    justify-content: center;
 
-  color: var(--claro);
+    border-radius: 15px;
 
-  display: flex;
+    background: var(--principal);
 
-  align-items: center;
-  justify-content: center;
+    color: var(--claro);
 
-  font-size: 25px;
+    font-size: 25px;
 
-  box-shadow:
-    0 9px 22px rgba(87, 26, 26, .18);
+    box-shadow:
+        0 9px 22px rgba(87, 26, 26, .20);
 }
 
 /* =========================================================
@@ -331,19 +310,19 @@ button:active {
    ========================================================= */
 
 .descricao {
-  background: var(--claro);
+    padding: 14px 17px;
 
-  color: var(--texto-secundario);
+    margin-bottom: 24px;
 
-  padding: 14px 16px;
+    background: var(--claro);
 
-  border-left: 4px solid var(--vinho);
+    border-left: 4px solid var(--principal);
 
-  border-radius: 10px;
+    border-radius: 10px;
 
-  margin-bottom: 24px;
+    color: var(--texto-suave);
 
-  font-size: 14px;
+    font-size: 14px;
 }
 
 /* =========================================================
@@ -351,47 +330,46 @@ button:active {
    ========================================================= */
 
 .card {
-  background: var(--branco);
+    padding: 20px;
 
-  border: 1px solid var(--borda);
+    margin-bottom: 15px;
 
-  border-radius: var(--raio);
+    background: var(--branco);
 
-  padding: 20px;
+    border: 1px solid var(--borda);
 
-  margin-bottom: 15px;
+    border-radius: 14px;
 
-  box-shadow:
-    0 7px 22px var(--sombra);
+    box-shadow: var(--sombra);
 
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease;
+    transition:
+        transform .2s,
+        box-shadow .2s;
 }
 
 .card:hover {
-  transform: translateY(-2px);
+    transform: translateY(-2px);
 
-  box-shadow:
-    0 12px 28px rgba(87, 26, 26, .15);
+    box-shadow:
+        0 12px 30px rgba(87, 26, 26, .14);
 }
 
 .card h3 {
-  margin-top: 0;
+    margin-top: 0;
 
-  padding-bottom: 10px;
+    padding-bottom: 10px;
 
-  border-bottom: 1px solid var(--borda);
+    border-bottom: 1px solid var(--borda);
 }
 
 .card p {
-  color: var(--texto);
+    font-size: 14px;
 
-  font-size: 14px;
+    line-height: 1.55;
 }
 
 .card small {
-  color: var(--texto-secundario);
+    color: var(--texto-suave);
 }
 
 /* =========================================================
@@ -399,64 +377,65 @@ button:active {
    ========================================================= */
 
 .fila-box {
-  background: rgba(238, 226, 226, .55);
+    padding: 22px;
 
-  border: 1px solid var(--borda);
+    background:
+        rgba(238, 226, 226, .55);
 
-  border-radius: var(--raio);
+    border: 1px solid var(--borda);
 
-  padding: 22px;
+    border-radius: 15px;
 }
 
 .fila-header {
-  display: flex;
+    display: flex;
 
-  align-items: center;
+    align-items: center;
 
-  justify-content: space-between;
+    justify-content: space-between;
 
-  gap: 15px;
+    gap: 15px;
 
-  margin-bottom: 18px;
+    margin-bottom: 18px;
 }
 
 .fila-header h3 {
-  margin: 0;
+    margin: 0;
 }
 
 .fila-paciente {
-  display: flex;
+    display: flex;
 
-  align-items: center;
+    align-items: center;
 
-  justify-content: space-between;
+    justify-content: space-between;
 
-  gap: 15px;
+    gap: 15px;
 
-  padding: 16px;
+    padding: 16px;
 
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 
-  background: var(--branco);
+    background: var(--branco);
 
-  border: 1px solid var(--borda);
+    border: 1px solid var(--borda);
 
-  border-radius: 11px;
+    border-radius: 11px;
 
-  box-shadow:
-    0 4px 12px rgba(87, 26, 26, .06);
+    box-shadow:
+        0 4px 12px rgba(87, 26, 26, .06);
 }
 
 .fila-paciente strong {
-  display: block;
+    display: block;
 
-  color: var(--vinho);
+    margin-bottom: 4px;
 
-  margin-bottom: 4px;
+    color: var(--principal);
 }
 
 .fila-paciente small {
-  color: var(--texto-secundario);
+    color: var(--texto-suave);
 }
 
 /* =========================================================
@@ -464,23 +443,23 @@ button:active {
    ========================================================= */
 
 .paciente-selecionado {
-  padding: 14px 16px;
+    padding: 14px 16px;
 
-  margin-bottom: 18px;
+    margin-bottom: 18px;
 
-  background: var(--claro);
+    background: var(--claro);
 
-  color: var(--vinho);
+    border: 1px solid var(--borda);
 
-  border: 1px solid var(--borda);
+    border-radius: 10px;
 
-  border-radius: 10px;
+    color: var(--principal);
 
-  font-size: 14px;
+    font-size: 14px;
 }
 
 .paciente-selecionado strong {
-  font-weight: 800;
+    font-weight: 800;
 }
 
 /* =========================================================
@@ -488,50 +467,44 @@ button:active {
    ========================================================= */
 
 .risco {
-  display: inline-flex;
+    display: inline-flex;
 
-  align-items: center;
+    align-items: center;
+    justify-content: center;
 
-  justify-content: center;
+    padding: 7px 12px;
 
-  padding: 7px 12px;
+    border-radius: 999px;
 
-  border-radius: 999px;
+    font-size: 12px;
 
-  font-size: 12px;
+    font-weight: 800;
 
-  font-weight: 800;
-
-  letter-spacing: .4px;
-
-  margin: 5px 0 10px;
+    letter-spacing: .4px;
 }
 
 .risco.baixo {
-  background: #DCEDE6;
+    background: #DCEBE4;
 
-  color: #28604D;
+    color: #32634F;
 }
 
 .risco.medio {
-  background: #F1E5C8;
+    background: #F1E4C7;
 
-  color: #77551B;
+    color: #77581D;
 }
 
 .risco.alto {
-  background: #F3D5D5;
+    background: #F2D4D4;
 
-  color: #8C2929;
+    color: #8C2B2B;
 }
 
 .risco.urgente {
-  background: var(--vinho);
+    background: var(--principal);
 
-  color: var(--claro);
-
-  box-shadow:
-    0 5px 14px rgba(87, 26, 26, .20);
+    color: var(--claro);
 }
 
 /* =========================================================
@@ -539,163 +512,167 @@ button:active {
    ========================================================= */
 
 .vazio {
-  padding: 28px;
+    padding: 28px;
 
-  text-align: center;
+    background: var(--claro);
 
-  color: var(--texto-secundario);
+    border-radius: 11px;
 
-  background: var(--claro);
+    text-align: center;
 
-  border-radius: 11px;
+    color: var(--texto-suave);
 }
 
 .erro-texto {
-  padding: 14px;
+    padding: 14px;
 
-  border-radius: 10px;
+    background: #F5DEDE;
 
-  background: #F5DEDE;
+    border-radius: 10px;
 
-  color: var(--erro);
+    color: var(--vermelho);
 
-  font-weight: 650;
+    font-weight: 700;
 }
 
 /* =========================================================
    LOGIN
    ========================================================= */
 
-body.login-page {
-  display: flex;
+.login-page {
+    display: flex;
 
-  align-items: center;
+    align-items: center;
 
-  justify-content: center;
+    justify-content: center;
 
-  min-height: 100vh;
+    width: 100vw;
 
-  padding: 20px;
+    min-height: 100vh;
+
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--principal),
+            #3E1010 55%,
+            var(--claro)
+        );
 }
 
 .login-wrapper {
-  width: 100%;
+    width: 100%;
 
-  max-width: 440px;
+    max-width: 450px;
 }
 
 .login-card {
-  position: relative;
+    position: relative;
 
-  overflow: hidden;
+    overflow: hidden;
 
-  background: var(--branco);
+    padding: 40px;
 
-  border-radius: 22px;
+    background: var(--branco);
 
-  padding: 40px;
+    border-radius: 22px;
 
-  text-align: center;
+    text-align: center;
 
-  box-shadow:
-    0 30px 70px rgba(30, 5, 5, .28);
+    box-shadow:
+        0 30px 70px rgba(30, 5, 5, .30);
 }
 
 .login-card::before {
-  content: "";
+    content: "";
 
-  position: absolute;
+    position: absolute;
 
-  top: 0;
-  left: 0;
+    top: 0;
+    left: 0;
 
-  width: 100%;
-  height: 6px;
+    width: 100%;
+    height: 6px;
 
-  background: var(--vinho);
+    background: var(--principal);
 }
 
 .logo {
-  width: 80px;
-  height: 80px;
+    width: 82px;
+    height: 82px;
 
-  margin: 4px auto 20px;
+    margin: 4px auto 20px;
 
-  border-radius: 50%;
+    display: flex;
 
-  background: var(--vinho);
+    align-items: center;
+    justify-content: center;
 
-  color: var(--claro);
+    border-radius: 50%;
 
-  display: flex;
+    background: var(--principal);
 
-  align-items: center;
-  justify-content: center;
+    color: var(--claro);
 
-  font-size: 36px;
+    font-size: 36px;
 
-  box-shadow:
-    0 12px 28px rgba(87, 26, 26, .25);
+    box-shadow:
+        0 12px 30px rgba(87, 26, 26, .25);
 }
 
 .login-card h1 {
-  color: var(--vinho);
+    margin: 0 0 5px;
 
-  font-size: 26px;
+    color: var(--principal);
 
-  margin: 0 0 5px;
+    font-size: 26px;
 }
 
 .login-card .subtitulo {
-  color: var(--texto-secundario);
+    margin-bottom: 28px;
 
-  margin-bottom: 28px;
-}
-
-.login-card input {
-  text-align: left;
+    color: var(--texto-suave);
 }
 
 .login-card button {
-  width: 100%;
+    width: 100%;
 
-  padding: 14px;
-
-  margin-top: 2px;
+    padding: 14px;
 }
 
 #mensagem {
-  min-height: 20px;
+    min-height: 20px;
 
-  margin-top: 16px;
+    margin-top: 16px;
 
-  color: var(--erro);
+    color: var(--vermelho);
 
-  font-size: 14px;
+    font-size: 14px;
 
-  font-weight: 700;
+    font-weight: 700;
 }
 
 .usuarios-teste {
-  margin-top: 25px;
+    margin-top: 25px;
 
-  padding-top: 20px;
+    padding-top: 20px;
 
-  border-top: 1px solid var(--borda);
+    border-top: 1px solid var(--borda);
 
-  text-align: left;
+    text-align: left;
 }
 
 .usuarios-teste strong {
-  color: var(--vinho);
+    color: var(--principal);
 }
 
 .usuarios-teste p {
-  color: var(--texto-secundario);
+    margin: 7px 0;
 
-  font-size: 13px;
+    color: var(--texto-suave);
 
-  margin: 7px 0;
+    font-size: 13px;
 }
 
 /* =========================================================
@@ -703,75 +680,57 @@ body.login-page {
    ========================================================= */
 
 #consultas {
-  display: grid;
+    display: grid;
 
-  grid-template-columns:
-    repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns:
+        repeat(auto-fit, minmax(300px, 1fr));
 
-  gap: 16px;
+    gap: 17px;
 }
 
 #consultas .card {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 /* =========================================================
-   RESPONSIVIDADE
+   RESPONSIVO
    ========================================================= */
-
-@media (min-width: 1024px) {
-
-  .container {
-    padding: 40px 55px;
-  }
-
-}
-
-@media (min-width: 1600px) {
-
-  .container {
-    padding-left: 80px;
-    padding-right: 80px;
-  }
-
-}
 
 @media (max-width: 700px) {
 
-  .container {
-    padding: 22px 16px;
-  }
+    .container {
+        padding: 22px 16px;
+    }
 
-  .topo,
-  .pagina-header,
-  .fila-header {
-    align-items: flex-start;
+    .topo,
+    .pagina-header,
+    .fila-header {
+        align-items: flex-start;
 
-    flex-direction: column;
-  }
+        flex-direction: column;
+    }
 
-  .acoes {
-    width: 100%;
-  }
+    .acoes {
+        width: 100%;
+    }
 
-  .acoes button {
-    flex: 1;
-  }
+    .acoes button {
+        flex: 1;
+    }
 
-  .fila-paciente {
-    align-items: stretch;
+    .fila-paciente {
+        align-items: stretch;
 
-    flex-direction: column;
-  }
+        flex-direction: column;
+    }
 
-  .fila-paciente button {
-    width: 100%;
-  }
+    .fila-paciente button {
+        width: 100%;
+    }
 
-  .login-card {
-    padding: 30px 22px;
-  }
-
+    .login-card {
+        padding: 30px 22px;
+    }
 }
 
 /* =========================================================
@@ -779,19 +738,19 @@ body.login-page {
    ========================================================= */
 
 ::-webkit-scrollbar {
-  width: 9px;
+    width: 9px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--claro);
+    background: var(--claro);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--vinho);
+    background: var(--principal);
 
-  border-radius: 20px;
+    border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--vinho-hover);
+    background: var(--principal-hover);
 }
