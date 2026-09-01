@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -16,585 +15,297 @@
         rel="stylesheet"
         href="css/style.css"
     >
-
-    <style>
-
-        .login-page {
-            width: 100vw;
-            min-width: 100vw;
-
-            min-height: 100vh;
-
-            margin: 0;
-            padding: 40px;
-
-            display: flex;
-            background:
-                linear-gradient(
-                    135deg,
-                    #571A1A 0%,
-                    #571A1A 48%,
-                    #EEE2E2 100%
-                );
-        }
-
-
-        /* =====================================================
-           ÁREA DO LOGIN
-           ===================================================== */
-
-        .login-wrapper {
-            width: 100%;
-
-            max-width: 620px;
-        }
-
-
-        /* =====================================================
-           PAINEL
-           ===================================================== */
-
-        .login-card {
-            position: relative;
-
-            width: 100%;
-
-            padding: 55px 65px;
-
-            background: #EEE2E2;
-
-            border-radius: 26px;
-
-            box-shadow:
-                0 30px 80px
-                rgba(30, 5, 5, .35);
-
-            text-align: center;
-
-            overflow: hidden;
-        }
-
-
-        /* Barra superior */
-
-        .login-card::before {
-            content: "";
-
-            position: absolute;
-
-            top: 0;
-            left: 0;
-
-            width: 100%;
-            height: 8px;
-
-            background: #571A1A;
-        }
-
-
-        /* =====================================================
-           LOGO
-           ===================================================== */
-
-        .logo {
-            width: 100px;
-            height: 100px;
-
-            margin: 0 auto 25px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 50%;
-
-            background: #571A1A;
-
-            color: #EEE2E2;
-
-            font-size: 45px;
-
-            box-shadow:
-                0 15px 35px
-                rgba(87, 26, 26, .28);
-        }
-
-
-        /* =====================================================
-           TÍTULO
-           ===================================================== */
-
-        .login-card h1 {
-            margin: 0;
-
-            color: #571A1A;
-
-            font-size: 32px;
-
-            font-weight: 800;
-
-            letter-spacing: -.7px;
-        }
-
-
-        .login-card .subtitulo {
-            margin-top: 9px;
-
-            margin-bottom: 35px;
-
-            color: #806D6D;
-
-            font-size: 16px;
-        }
-
-
-        /* =====================================================
-           CAMPOS
-           ===================================================== */
-
-        .login-card input {
-            width: 100%;
-
-            padding: 17px 18px;
-
-            margin-bottom: 18px;
-
-            background: #FFFFFF;
-
-            border: 1px solid #D9C4C4;
-
-            border-radius: 12px;
-
-            color: #3A2525;
-
-            font-size: 16px;
-
-            text-align: left;
-
-            outline: none;
-
-            transition:
-                border-color .2s,
-                box-shadow .2s;
-        }
-
-
-        .login-card input:focus {
-            border-color: #571A1A;
-
-            box-shadow:
-                0 0 0 4px
-                rgba(87, 26, 26, .10);
-        }
-
-
-        .login-card input::placeholder {
-            color: #9A8787;
-        }
-
-
-        /* =====================================================
-           BOTÃO ENTRAR
-           ===================================================== */
-
-        .login-card button {
-            width: 100%;
-
-            padding: 17px;
-
-            margin-top: 5px;
-
-            border: none;
-
-            border-radius: 12px;
-
-            background: #571A1A;
-
-            color: #EEE2E2;
-
-            font-size: 16px;
-
-            font-weight: 800;
-
-            cursor: pointer;
-
-            transition:
-                background .2s,
-                transform .15s,
-                box-shadow .2s;
-        }
-
-
-        .login-card button:hover {
-            background: #6D2424;
-
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 10px 25px
-                rgba(87, 26, 26, .25);
-        }
-
-
-        /* =====================================================
-           MENSAGEM
-           ===================================================== */
-
-        #mensagem {
-            min-height: 22px;
-
-            margin-top: 17px;
-
-            color: #9B3030;
-
-            font-size: 14px;
-
-            font-weight: 700;
-        }
-
-
-        /* =====================================================
-           USUÁRIOS DE TESTE
-           ===================================================== */
-
-        .usuarios-teste {
-            margin-top: 30px;
-
-            padding: 20px;
-
-            border-top:
-                1px solid
-                rgba(87, 26, 26, .15);
-
-            background:
-                rgba(255, 255, 255, .35);
-
-            border-radius: 12px;
-
-            text-align: left;
-        }
-
-
-        .usuarios-teste strong {
-            display: block;
-
-            margin-bottom: 10px;
-
-            color: #571A1A;
-
-            font-size: 14px;
-        }
-
-
-        .usuarios-teste p {
-            margin: 7px 0;
-
-            color: #806D6D;
-
-            font-size: 13px;
-        }
-
-
-        /* =====================================================
-           TELAS MENORES
-           ===================================================== */
-
-        @media (max-width: 700px) {
-
-            .login-page {
-                padding: 20px;
-            }
-
-
-            .login-wrapper {
-                max-width: 100%;
-            }
-
-
-            .login-card {
-                padding: 40px 25px;
-            }
-
-
-            .logo {
-                width: 80px;
-                height: 80px;
-
-                font-size: 36px;
-            }
-
-
-            .login-card h1 {
-                font-size: 25px;
-            }
-
-
-            .login-card .subtitulo {
-                font-size: 14px;
-
-                margin-bottom: 27px;
-            }
-
-        }
-
-    </style>
-
 </head>
-
 
 <body class="login-page">
 
+    <main class="login-wrapper">
 
-<div class="login-wrapper">
+        <section class="login-card">
 
+            <!-- =================================================
+                 LOGO
+                 ================================================= -->
 
-    <div class="login-card">
+            <div class="logo">
+                <img
+                    src="img/logo.png"
+                    alt="Logo do Hospital"
+                >
+            </div>
 
 
-        <!-- =================================================
-             LOGO
-             ================================================= -->
+            <!-- =================================================
+                 TÍTULO
+                 ================================================= -->
 
-     <div class="logo">
-    <img src="img/logo.png" alt="Logo do Hospital">
-</div>
+            <h1>
+                Sistema de Gestão Clínica
+            </h1>
 
+            <p class="subtitulo">
+                Acesso ao sistema hospitalar
+            </p>
 
-        <!-- =================================================
-             TÍTULO
-             ================================================= -->
 
-        <h1>
-            Sistema de Gestão Clínica
-        </h1>
+            <!-- =================================================
+                 FORMULÁRIO
+                 ================================================= -->
 
+            <form id="loginForm">
 
-        <p class="subtitulo">
-            Acesso ao sistema hospitalar
-        </p>
+                <!-- USUÁRIO -->
 
+                <div class="campo">
 
-        <!-- =================================================
-             USUÁRIO
-             ================================================= -->
+                    <label for="usuario">
+                        Usuário
+                    </label>
 
-        <input
-            id="usuario"
-            type="text"
-            placeholder="Usuário"
-            autocomplete="username"
-        >
+                    <input
+                        id="usuario"
+                        type="text"
+                        placeholder="Digite seu usuário"
+                        autocomplete="username"
+                    >
 
+                </div>
 
-        <!-- =================================================
-             SENHA
-             ================================================= -->
 
-        <input
-            id="senha"
-            type="password"
-            placeholder="Senha"
-            autocomplete="current-password"
-        >
+                <!-- SENHA -->
 
+                <div class="campo">
 
-        <!-- =================================================
-             BOTÃO
-             ================================================= -->
+                    <label for="senha">
+                        Senha
+                    </label>
 
-        <button
-            type="button"
-            onclick="login()"
-        >
-            Entrar
-        </button>
+                    <input
+                        id="senha"
+                        type="password"
+                        placeholder="Digite sua senha"
+                        autocomplete="current-password"
+                    >
 
+                </div>
 
-        <!-- =================================================
-             MENSAGEM
-             ================================================= -->
 
-        <div id="mensagem"></div>
-    </div>
+                <!-- BOTÃO -->
 
+                <button
+                    type="submit"
+                    id="btnEntrar"
+                >
+                    Entrar
+                </button>
 
-</div>
+            </form>
 
 
-<script>
+            <!-- =================================================
+                 MENSAGEM
+                 ================================================= -->
 
-/* =========================================================
-   LOGIN
-   ========================================================= */
+            <div id="mensagem"></div>
 
-function login() {
+        </section>
 
-    const usuario =
-        document
-            .getElementById("usuario")
-            .value
-            .trim();
+    </main>
 
 
-    const senha =
-        document
-            .getElementById("senha")
-            .value
-            .trim();
+    <!-- =========================================================
+         LOGIN
+         ========================================================= -->
 
+    <script>
 
-    const mensagem =
-        document
-            .getElementById("mensagem");
+        const formulario =
+            document.getElementById("loginForm");
 
+        const usuarioInput =
+            document.getElementById("usuario");
 
-    mensagem.textContent = "";
+        const senhaInput =
+            document.getElementById("senha");
 
+        const mensagem =
+            document.getElementById("mensagem");
 
-    /* =====================================================
-       VALIDAÇÃO
-       ===================================================== */
+        const botao =
+            document.getElementById("btnEntrar");
 
-    if (!usuario || !senha) {
 
-        mensagem.textContent =
-            "Informe usuário e senha.";
+        formulario.addEventListener(
+            "submit",
+            function (event) {
 
-        return;
-    }
-
-
-    /* =====================================================
-       ENVIA PARA O SERVIDOR
-       ===================================================== */
-
-    fetch("/login", {
-
-        method: "POST",
-
-        headers: {
-            "Content-Type":
-                "application/json"
-        },
-
-        body: JSON.stringify({
-
-            usuario,
-            senha
-
-        })
-
-    })
-
-
-    .then(async response => {
-
-        const data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.erro ||
-                "Usuário ou senha inválidos."
-            );
-
-        }
-
-
-        return data;
-
-    })
-
-
-    .then(data => {
-
-        const tipo =
-            data.usuario &&
-            data.usuario.tipo;
-
-
-        /* ===============================================
-           TRIAGEM
-           =============================================== */
-
-        if (tipo === "triagem") {
-
-            window.location.href =
-                "triagem.html";
-
-            return;
-        }
-
-
-        /* ===============================================
-           MÉDICO
-           =============================================== */
-
-        if (tipo === "medico") {
-
-            window.location.href =
-                "medico.html";
-
-            return;
-        }
-
-
-        /* ===============================================
-           ATENDIMENTO
-           =============================================== */
-
-        if (tipo === "atendimento") {
-
-            window.location.href =
-                "atendimento.html";
-
-            return;
-        }
-
-
-        mensagem.textContent =
-            "Tipo de usuário não reconhecido.";
-
-    })
-
-
-    .catch(error => {
-
-        console.error(error);
-
-        mensagem.textContent =
-            error.message ||
-            "Não foi possível realizar o login.";
-
-    });
-
-}
-
-
-/* =========================================================
-   ENTER PARA ENTRAR
-   ========================================================= */
-
-document
-    .getElementById("senha")
-    .addEventListener(
-        "keydown",
-        function(event) {
-
-            if (event.key === "Enter") {
+                event.preventDefault();
 
                 login();
 
             }
+        );
+
+
+        async function login() {
+
+            const usuario =
+                usuarioInput.value.trim();
+
+            const senha =
+                senhaInput.value.trim();
+
+
+            mensagem.textContent = "";
+
+
+            /* ===============================================
+               VALIDAÇÃO
+               =============================================== */
+
+            if (!usuario || !senha) {
+
+                mensagem.textContent =
+                    "Informe usuário e senha.";
+
+                return;
+            }
+
+
+            /* ===============================================
+               ESTADO DO BOTÃO
+               =============================================== */
+
+            botao.disabled = true;
+
+            botao.textContent =
+                "Entrando...";
+
+
+            try {
+
+                /* ===========================================
+                   ENVIA PARA O SERVIDOR
+                   =========================================== */
+
+                const response =
+                    await fetch("/login", {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            usuario: usuario,
+
+                            senha: senha
+
+                        })
+
+                    });
+
+
+                const data =
+                    await response.json();
+
+
+                /* ===========================================
+                   ERRO
+                   =========================================== */
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.erro ||
+                        "Usuário ou senha inválidos."
+                    );
+
+                }
+
+
+                /* ===========================================
+                   TIPO DE USUÁRIO
+                   =========================================== */
+
+                const tipo =
+                    data.usuario &&
+                    data.usuario.tipo;
+
+
+                /* ===========================================
+                   TRIAGEM
+                   =========================================== */
+
+                if (tipo === "triagem") {
+
+                    window.location.href =
+                        "triagem.html";
+
+                    return;
+                }
+
+
+                /* ===========================================
+                   MÉDICO
+                   =========================================== */
+
+                if (tipo === "medico") {
+
+                    window.location.href =
+                        "medico.html";
+
+                    return;
+                }
+
+
+                /* ===========================================
+                   ATENDIMENTO
+                   =========================================== */
+
+                if (tipo === "atendimento") {
+
+                    window.location.href =
+                        "atendimento.html";
+
+                    return;
+                }
+
+
+                /* ===========================================
+                   TIPO NÃO RECONHECIDO
+                   =========================================== */
+
+                mensagem.textContent =
+                    "Tipo de usuário não reconhecido.";
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+                mensagem.textContent =
+                    error.message ||
+                    "Não foi possível realizar o login.";
+
+            }
+
+            finally {
+
+                botao.disabled = false;
+
+                botao.textContent =
+                    "Entrar";
+
+            }
 
         }
-    );
 
-</script>
-
+    </script>
 
 </body>
 
