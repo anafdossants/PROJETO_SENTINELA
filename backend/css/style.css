@@ -1,545 +1,9 @@
-:root {
-    --principal: #571A1A;
-    --principal-hover: #6D2424;
-    --principal-escuro: #3D1010;
-
-    --claro: #EEE2E2;
-
-    --fundo: #F7F2F2;
-    --branco: #FFFFFF;
-
-    --texto: #3A2525;
-    --texto-suave: #806D6D;
-
-    --borda: #D9C4C4;
-
-    --verde: #467A64;
-    --amarelo: #9A742B;
-    --vermelho: #9B3030;
-
-    --sombra:
-        0 8px 25px rgba(87, 26, 26, .10);
-}
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    width: 100%;
-    min-width: 100%;
-    height: 100%;
-    min-height: 100%;
-
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family:
-        Inter,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    background: var(--fundo);
-
-    color: var(--texto);
-
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-/* =========================================================
-   TELA CHEIA
-   ========================================================= */
-
-.container {
-    width: 100vw !important;
-    min-width: 100vw !important;
-
-    min-height: 100vh !important;
-
-    margin: 0 !important;
-
-    padding: 38px 55px;
-
-    background: var(--fundo);
-
-    border: none !important;
-    border-radius: 0 !important;
-
-    box-shadow: none !important;
-}
-
-/* =========================================================
-   CABEÇALHO
-   ========================================================= */
-
-.topo,
-.pagina-header {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 25px;
-
-    margin-bottom: 25px;
-}
-
-.topo h2,
-.pagina-header h2 {
-    margin: 0;
-
-    color: var(--principal);
-
-    font-size: 27px;
-
-    font-weight: 800;
-
-    letter-spacing: -.5px;
-}
-
-.subtitulo {
-    margin-top: 6px;
-
-    color: var(--texto-suave);
-
-    font-size: 14px;
-}
-
-.acoes {
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-}
-
-/* =========================================================
-   LINHA
-   ========================================================= */
-
-hr {
-    border: 0;
-
-    border-top: 1px solid var(--borda);
-
-    margin: 28px 0;
-}
-
-/* =========================================================
-   TÍTULOS
-   ========================================================= */
-
-h1,
-h2,
-h3,
-h4 {
-    color: var(--principal);
-}
-
-h3 {
-    font-size: 19px;
-}
-
-/* =========================================================
-   CAMPOS
-   ========================================================= */
-
-label,
-.campo-label {
-    display: block;
-
-    margin-bottom: 7px;
-
-    color: var(--principal);
-
-    font-weight: 750;
-}
-
-input,
-select,
-textarea {
-    width: 100%;
-
-    padding: 13px 15px;
-
-    margin-bottom: 17px;
-
-    border: 1px solid var(--borda);
-
-    border-radius: 10px;
-
-    background: var(--branco);
-
-    color: var(--texto);
-
-    font-family: inherit;
-
-    font-size: 14px;
-
-    outline: none;
-
-    transition:
-        border-color .2s,
-        box-shadow .2s,
-        background .2s;
-}
-
-input::placeholder,
-textarea::placeholder {
-    color: #9A8787;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: var(--principal);
-
-    box-shadow:
-        0 0 0 3px rgba(87, 26, 26, .10);
-
-    background: #FFFDFD;
-}
-
-textarea {
-    min-height: 110px;
-
-    resize: vertical;
-}
-
-/* =========================================================
-   BOTÕES
-   ========================================================= */
-
-button {
-    border: none;
-
-    border-radius: 10px;
-
-    padding: 12px 19px;
-
-    background: var(--principal);
-
-    color: var(--claro);
-
-    font-family: inherit;
-
-    font-size: 14px;
-
-    font-weight: 750;
-
-    cursor: pointer;
-
-    transition:
-        background .2s,
-        transform .15s,
-        box-shadow .2s;
-}
-
-button:hover {
-    background: var(--principal-hover);
-
-    box-shadow:
-        0 7px 18px rgba(87, 26, 26, .20);
-
-    transform: translateY(-1px);
-}
-
-button:active {
-    transform: translateY(0);
-}
-
-.btn-secundario {
-    background: var(--claro);
-
-    color: var(--principal);
-
-    border: 1px solid var(--borda);
-}
-
-.btn-secundario:hover {
-    background: #E4D2D2;
-
-    color: var(--principal-escuro);
-}
-
-.btn-tv {
-    background: var(--principal);
-
-    color: var(--claro);
-}
-
-/* =========================================================
-   ÍCONE
-   ========================================================= */
-
-.icone {
-    width: 54px;
-    height: 54px;
-
-    flex-shrink: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 15px;
-
-    background: var(--principal);
-
-    color: var(--claro);
-
-    font-size: 25px;
-
-    box-shadow:
-        0 9px 22px rgba(87, 26, 26, .20);
-}
-
-/* =========================================================
-   DESCRIÇÃO
-   ========================================================= */
-
-.descricao {
-    padding: 14px 17px;
-
-    margin-bottom: 24px;
-
-    background: var(--claro);
-
-    border-left: 4px solid var(--principal);
-
-    border-radius: 10px;
-
-    color: var(--texto-suave);
-
-    font-size: 14px;
-}
-
-/* =========================================================
-   CARDS
-   ========================================================= */
-
-.card {
-    padding: 20px;
-
-    margin-bottom: 15px;
-
-    background: var(--branco);
-
-    border: 1px solid var(--borda);
-
-    border-radius: 14px;
-
-    box-shadow: var(--sombra);
-
-    transition:
-        transform .2s,
-        box-shadow .2s;
-}
-
-.card:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 12px 30px rgba(87, 26, 26, .14);
-}
-
-.card h3 {
-    margin-top: 0;
-
-    padding-bottom: 10px;
-
-    border-bottom: 1px solid var(--borda);
-}
-
-.card p {
-    font-size: 14px;
-
-    line-height: 1.55;
-}
-
-.card small {
-    color: var(--texto-suave);
-}
-
-/* =========================================================
-   FILA
-   ========================================================= */
-
-.fila-box {
-    padding: 22px;
-
-    background:
-        rgba(238, 226, 226, .55);
-
-    border: 1px solid var(--borda);
-
-    border-radius: 15px;
-}
-
-.fila-header {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
-
-    margin-bottom: 18px;
-}
-
-.fila-header h3 {
-    margin: 0;
-}
-
-.fila-paciente {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
-
-    padding: 16px;
-
-    margin-bottom: 10px;
-
-    background: var(--branco);
-
-    border: 1px solid var(--borda);
-
-    border-radius: 11px;
-
-    box-shadow:
-        0 4px 12px rgba(87, 26, 26, .06);
-}
-
-.fila-paciente strong {
-    display: block;
-
-    margin-bottom: 4px;
-
-    color: var(--principal);
-}
-
-.fila-paciente small {
-    color: var(--texto-suave);
-}
-
-/* =========================================================
-   PACIENTE SELECIONADO
-   ========================================================= */
-
-.paciente-selecionado {
-    padding: 14px 16px;
-
-    margin-bottom: 18px;
-
-    background: var(--claro);
-
-    border: 1px solid var(--borda);
-
-    border-radius: 10px;
-
-    color: var(--principal);
-
-    font-size: 14px;
-}
-
-.paciente-selecionado strong {
-    font-weight: 800;
-}
-
-/* =========================================================
-   RISCO
-   ========================================================= */
-
-.risco {
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 7px 12px;
-
-    border-radius: 999px;
-
-    font-size: 12px;
-
-    font-weight: 800;
-
-    letter-spacing: .4px;
-}
-
-.risco.baixo {
-    background: #DCEBE4;
-
-    color: #32634F;
-}
-
-.risco.medio {
-    background: #F1E4C7;
-
-    color: #77581D;
-}
-
-.risco.alto {
-    background: #F2D4D4;
-
-    color: #8C2B2B;
-}
-
-.risco.urgente {
-    background: var(--principal);
-
-    color: var(--claro);
-}
-
-/* =========================================================
-   ESTADOS
-   ========================================================= */
-
-.vazio {
-    padding: 28px;
-
-    background: var(--claro);
-
-    border-radius: 11px;
-
-    text-align: center;
-
-    color: var(--texto-suave);
-}
-
-.erro-texto {
-    padding: 14px;
-
-    background: #F5DEDE;
-
-    border-radius: 10px;
-
-    color: var(--vermelho);
-
-    font-weight: 700;
-}
-
 /* =========================================================
    LOGIN
    ========================================================= */
 
 .login-page {
+
     display: flex;
 
     align-items: center;
@@ -550,207 +14,309 @@ button:active {
 
     min-height: 100vh;
 
-    padding: 25px;
+    margin: 0;
+
+    padding: 30px;
 
     background:
         linear-gradient(
             135deg,
-            var(--principal),
-            #3E1010 55%,
-            var(--claro)
+            var(--principal) 0%,
+            #3E1010 52%,
+            var(--claro) 100%
         );
+
+    box-sizing: border-box;
 }
+
+
+/* =========================================================
+   ÁREA DO LOGIN
+   ========================================================= */
 
 .login-wrapper {
+
     width: 100%;
 
-    max-width: 450px;
+    max-width: 500px;
+
+    margin: 0 auto;
 }
 
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
 .login-card {
+
     position: relative;
 
-    overflow: hidden;
+    width: 100%;
 
-    padding: 40px;
+    padding: 42px 45px;
 
-    background: var(--branco);
+    background: var(--claro);
 
-    border-radius: 22px;
+    border-radius: 24px;
 
     text-align: center;
 
     box-shadow:
-        0 30px 70px rgba(30, 5, 5, .30);
+        0 30px 70px
+        rgba(30, 5, 5, .30);
+
+    box-sizing: border-box;
+
+    overflow: hidden;
 }
 
+
+/* =========================================================
+   BARRA SUPERIOR
+   ========================================================= */
+
 .login-card::before {
+
     content: "";
 
     position: absolute;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
+
     height: 6px;
 
     background: var(--principal);
 }
 
-.logo {
-    width: 82px;
-    height: 82px;
 
-    margin: 4px auto 20px;
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo {
+
+    width: 145px;
+
+    height: 145px;
+
+    margin: 5px auto 22px;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    border-radius: 50%;
+    background: transparent;
+
+    border: none;
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    overflow: visible;
+}
+
+
+/* IMAGEM DA LOGO */
+
+.logo img {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: contain;
+
+}
+
+
+/* =========================================================
+   TÍTULO
+   ========================================================= */
+
+.login-card h1 {
+
+    margin: 0;
+
+    color: var(--principal);
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    letter-spacing: -.6px;
+}
+
+
+/* =========================================================
+   SUBTÍTULO
+   ========================================================= */
+
+.login-card .subtitulo {
+
+    margin: 9px 0 28px;
+
+    color: var(--texto-suave);
+
+    font-size: 15px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   CAMPOS
+   ========================================================= */
+
+.login-card .campo {
+
+    width: 100%;
+
+    text-align: left;
+}
+
+
+/* LABEL */
+
+.login-card label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--principal);
+
+    font-size: 14px;
+
+    font-weight: 750;
+}
+
+
+/* INPUT */
+
+.login-card input {
+
+    width: 100%;
+
+    padding: 15px 16px;
+
+    margin-bottom: 17px;
+
+    background: var(--branco);
+
+    border: 1px solid var(--borda);
+
+    border-radius: 11px;
+
+    color: var(--texto);
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    outline: none;
+
+    box-sizing: border-box;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        transform .2s;
+}
+
+
+/* PLACEHOLDER */
+
+.login-card input::placeholder {
+
+    color: #9A8787;
+}
+
+
+/* INPUT FOCADO */
+
+.login-card input:focus {
+
+    border-color: var(--principal);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(87, 26, 26, .10);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   BOTÃO ENTRAR
+   ========================================================= */
+
+.login-card button {
+
+    width: 100%;
+
+    padding: 15px;
+
+    margin-top: 4px;
+
+    border: none;
+
+    border-radius: 11px;
 
     background: var(--principal);
 
     color: var(--claro);
 
-    font-size: 36px;
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background .2s,
+        transform .15s,
+        box-shadow .2s;
+}
+
+
+/* HOVER */
+
+.login-card button:hover {
+
+    background: var(--principal-hover);
+
+    transform: translateY(-2px);
 
     box-shadow:
-        0 12px 30px rgba(87, 26, 26, .25);
+        0 10px 25px
+        rgba(87, 26, 26, .25);
 }
 
-.login-card h1 {
-    margin: 0 0 5px;
 
-    color: var(--principal);
+/* CLICK */
 
-    font-size: 26px;
+.login-card button:active {
+
+    transform: translateY(0);
 }
 
-.login-card .subtitulo {
-    margin-bottom: 28px;
 
-    color: var(--texto-suave);
-}
+/* BOTÃO DESABILITADO */
 
-.login-card button {
-    width: 100%;
+.login-card button:disabled {
 
-    padding: 14px;
-}
-
-#mensagem {
-    min-height: 20px;
-
-    margin-top: 16px;
-
-    color: var(--vermelho);
-
-    font-size: 14px;
-
-    font-weight: 700;
-}
-
-.usuarios-teste {
-    margin-top: 25px;
-
-    padding-top: 20px;
-
-    border-top: 1px solid var(--borda);
-
-    text-align: left;
-}
-
-.usuarios-teste strong {
-    color: var(--principal);
-}
-
-.usuarios-teste p {
-    margin: 7px 0;
-
-    color: var(--texto-suave);
-
-    font-size: 13px;
-}
-
-/* =========================================================
-   CONSULTAS
-   ========================================================= */
-
-#consultas {
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(300px, 1fr));
-
-    gap: 17px;
-}
-
-#consultas .card {
-    margin-bottom: 0;
-}
-
-/* =========================================================
-   RESPONSIVO
-   ========================================================= */
-
-@media (max-width: 700px) {
-
-    .container {
-        padding: 22px 16px;
-    }
-
-    .topo,
-    .pagina-header,
-    .fila-header {
-        align-items: flex-start;
-
-        flex-direction: column;
-    }
-
-    .acoes {
-        width: 100%;
-    }
-
-    .acoes button {
-        flex: 1;
-    }
-
-    .fila-paciente {
-        align-items: stretch;
-
-        flex-direction: column;
-    }
-
-    .fila-paciente button {
-        width: 100%;
-    }
-
-    .login-card {
-        padding: 30px 22px;
-    }
-}
-
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
-
-::-webkit-scrollbar {
-    width: 9px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--claro);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--principal);
-
-    border-radius: 20px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--principal-hover);
-}
+    opacity: .
