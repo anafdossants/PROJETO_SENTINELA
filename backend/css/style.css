@@ -1,4 +1,3 @@
-```css
 /* =========================================================
    PALETA PRINCIPAL
    ========================================================= */
@@ -23,407 +22,73 @@
 
 
 /* =========================================================
-   RESET
+   CONFIGURAÇÕES GERAIS
    ========================================================= */
 
 * {
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     margin: 0;
+    padding: 0;
+
     font-family: Arial, Helvetica, sans-serif;
+
+    background: var(--claro);
     color: var(--texto);
-    background: #F7EEEE;
 }
 
 
 /* =========================================================
-   PÁGINA DE LOGIN
+   CONTAINER PRINCIPAL
    ========================================================= */
 
-.login-page {
-    min-height: 100vh;
-    width: 100%;
-    margin: 0;
+.container {
+    width: 90%;
+    max-width: 1100px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+    margin: 40px auto;
     padding: 30px;
 
-    background:
-        radial-gradient(
-            circle at 15% 20%,
-            rgba(255, 255, 255, .12),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 85% 80%,
-            rgba(255, 160, 160, .10),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #3F0707 0%,
-            #680E0E 50%,
-            #A83232 100%
-        );
-}
+    background: var(--branco);
 
-
-/* =========================================================
-   ÁREA DO LOGIN
-   ========================================================= */
-
-.login-wrapper {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-
-/* =========================================================
-   CARD DE LOGIN
-   ========================================================= */
-
-.login-card {
-    position: relative;
-
-    width: 100%;
-    padding: 44px 45px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 255, 255, .99),
-            rgba(255, 248, 248, .97)
-        );
-
-    border: 1px solid rgba(255, 255, 255, .7);
-    border-radius: 26px;
-
-    text-align: center;
+    border-radius: 18px;
 
     box-shadow:
-        0 35px 80px rgba(45, 7, 15, .30),
-        0 10px 30px rgba(80, 20, 30, .12);
-
-    overflow: hidden;
+        0 10px 35px rgba(63, 7, 7, 0.12);
 }
 
 
 /* =========================================================
-   BARRA SUPERIOR
+   TÍTULOS
    ========================================================= */
 
-.login-card::before {
-    content: "";
-
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 6px;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--principal-escuro),
-            var(--principal),
-            #A83232
-        );
+h1,
+h2,
+h3 {
+    color: var(--principal);
 }
 
-
-/* =========================================================
-   LOGO
-   ========================================================= */
-
-.logo {
-    width: 145px;
-    height: 145px;
-
-    margin: 5px auto 22px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: transparent;
-    border: none;
-    box-shadow: none;
-
-    overflow: visible;
+h1 {
+    margin-top: 0;
 }
 
-.logo img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: contain;
-
-    filter:
-        drop-shadow(
-            0 8px 15px
-            rgba(104, 14, 14, .15)
-        );
+h2 {
+    margin-top: 0;
 }
-
-
-/* =========================================================
-   TÍTULO LOGIN
-   ========================================================= */
-
-.login-card h1 {
-    margin: 0;
-
-    color: var(--principal-escuro);
-
-    font-size: 29px;
-    font-weight: 800;
-
-    line-height: 1.2;
-    letter-spacing: -.7px;
-}
-
-
-/* =========================================================
-   SUBTÍTULO
-   ========================================================= */
 
 .subtitulo {
-    margin: 9px 0 28px;
+    margin-top: -8px;
 
     color: var(--texto-suave);
 
     font-size: 15px;
-    line-height: 1.5;
 }
 
 
 /* =========================================================
-   CAMPOS DO LOGIN
-   ========================================================= */
-
-.login-card .campo {
-    width: 100%;
-    text-align: left;
-}
-
-
-/* =========================================================
-   LABEL
-   ========================================================= */
-
-.login-card label {
-    display: block;
-
-    margin-bottom: 7px;
-
-    color: var(--principal-escuro);
-
-    font-size: 14px;
-    font-weight: 700;
-}
-
-
-/* =========================================================
-   INPUT LOGIN
-   ========================================================= */
-
-.login-card input {
-    width: 100%;
-
-    padding: 15px 16px;
-    margin-bottom: 17px;
-
-    background: var(--branco);
-
-    border: 1px solid var(--borda);
-    border-radius: 12px;
-
-    color: var(--texto);
-
-    font-family: inherit;
-    font-size: 15px;
-
-    outline: none;
-
-    transition:
-        border-color .2s ease,
-        box-shadow .2s ease,
-        transform .2s ease,
-        background .2s ease;
-}
-
-.login-card input::placeholder {
-    color: #A58F93;
-}
-
-.login-card input:hover {
-    border-color: #D0AEB0;
-    background: #FFFCFC;
-}
-
-.login-card input:focus {
-    border-color: var(--principal);
-
-    box-shadow:
-        0 0 0 4px
-        rgba(104, 14, 14, .09),
-        0 6px 18px
-        rgba(104, 14, 14, .07);
-
-    transform: translateY(-1px);
-}
-
-
-/* =========================================================
-   BOTÕES GERAIS
-   ========================================================= */
-
-button {
-    font-family: inherit;
-}
-
-
-/* =========================================================
-   BOTÃO PRINCIPAL
-   ========================================================= */
-
-.login-card button,
-.container > button,
-.container button:not(.btn-secundario):not(.btn-tv) {
-    border: none;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--principal),
-            var(--principal-hover)
-        );
-
-    color: white;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        transform .15s ease,
-        box-shadow .2s ease,
-        background .2s ease;
-}
-
-.login-card button:hover,
-.container > button:hover,
-.container button:not(.btn-secundario):not(.btn-tv):hover {
-    background:
-        linear-gradient(
-            135deg,
-            #791111,
-            #9A2020
-        );
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 10px 24px
-        rgba(104, 14, 14, .22);
-}
-
-.login-card button:active,
-.container button:active {
-    transform: translateY(0);
-}
-
-.login-card button {
-    width: 100%;
-    padding: 15px;
-
-    margin-top: 4px;
-
-    border-radius: 12px;
-
-    font-size: 15px;
-}
-
-.login-card button:disabled {
-    opacity: .55;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-
-/* =========================================================
-   MENSAGEM LOGIN
-   ========================================================= */
-
-#mensagem {
-    margin-top: 18px;
-
-    color: var(--vermelho);
-
-    font-size: 14px;
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   PÁGINAS INTERNAS
-   ========================================================= */
-
-body:not(.login-page) {
-    min-height: 100vh;
-
-    background:
-        radial-gradient(
-            circle at top right,
-            rgba(104, 14, 14, .07),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #FFF9F9,
-            #F5EAEA
-        );
-}
-
-
-/* =========================================================
-   CONTAINER
-   ========================================================= */
-
-.container {
-    width: 92%;
-    max-width: 1200px;
-
-    margin: 35px auto;
-    padding: 30px;
-
-    background: rgba(255, 255, 255, .96);
-
-    border: 1px solid #EADADA;
-    border-radius: 22px;
-
-    box-shadow:
-        0 20px 55px
-        rgba(70, 10, 10, .10);
-}
-
-
-/* =========================================================
-   TOPO
+   TOPO DAS PÁGINAS
    ========================================================= */
 
 .topo {
@@ -436,30 +101,52 @@ body:not(.login-page) {
 }
 
 
-.topo h2 {
-    margin: 0;
-
-    color: var(--principal-escuro);
-
-    font-size: 27px;
-    font-weight: 800;
-}
-
-
-.topo .subtitulo {
-    margin: 7px 0 0;
-}
-
-
 /* =========================================================
    LINHAS
    ========================================================= */
 
 hr {
+    border: 0;
+
+    height: 1px;
+
     margin: 25px 0;
 
+    background: var(--borda);
+}
+
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
+button {
+    padding: 11px 18px;
+
     border: none;
-    border-top: 1px solid #EBDADA;
+    border-radius: 8px;
+
+    background: var(--principal);
+    color: var(--branco);
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+button:hover {
+    background: var(--principal-hover);
+
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 
@@ -468,71 +155,35 @@ hr {
    ========================================================= */
 
 .btn-secundario {
-    padding: 11px 18px;
+    background: #F2E5E5;
 
-    border: 1px solid #D9BABA;
-    border-radius: 10px;
-
-    background: white;
     color: var(--principal);
-
-    font-size: 14px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        background .2s,
-        color .2s,
-        transform .15s;
 }
 
-
 .btn-secundario:hover {
-    background: var(--principal);
-    color: white;
+    background: #E8D4D4;
 
-    transform: translateY(-1px);
+    color: var(--principal-escuro);
 }
 
 
 /* =========================================================
-   BOTÃO TV
+   BOTÃO DA TV
    ========================================================= */
 
 .btn-tv {
-    padding: 11px 18px;
-
-    border: none;
-    border-radius: 10px;
-
     background: var(--principal);
-    color: white;
 
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: .2s;
+    color: var(--branco);
 }
-
 
 .btn-tv:hover {
     background: var(--principal-hover);
-
-    transform: translateY(-1px);
-}
-
-
-.acoes {
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
 
 /* =========================================================
-   CABEÇALHO DA FILA
+   FILA MÉDICA / TRIAGEM
    ========================================================= */
 
 .fila-header {
@@ -541,235 +192,133 @@ hr {
     align-items: center;
     justify-content: space-between;
 
-    gap: 15px;
-
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
-
-.fila-header h3,
-.container > h3 {
-    color: var(--principal-escuro);
-
-    margin-top: 0;
-
-    font-size: 20px;
+.fila-header h3 {
+    margin: 0;
 }
 
 
 /* =========================================================
-   FILA DE PACIENTES
-   ========================================================= */
-
-.fila-box {
-    padding: 20px;
-
-    background: #FFFDFD;
-
-    border: 1px solid #EEDDDD;
-    border-radius: 16px;
-}
-
-
-/* =========================================================
-   PACIENTE NA FILA
-   ========================================================= */
-
-.fila-paciente {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 20px;
-
-    padding: 18px;
-
-    margin-bottom: 12px;
-
-    background: white;
-
-    border: 1px solid #E8D6D6;
-    border-left: 5px solid var(--principal);
-
-    border-radius: 13px;
-
-    box-shadow:
-        0 5px 16px
-        rgba(70, 10, 10, .06);
-
-    transition: .2s;
-}
-
-
-.fila-paciente:hover {
-    transform: translateX(3px);
-
-    box-shadow:
-        0 8px 22px
-        rgba(104, 14, 14, .10);
-}
-
-
-.fila-paciente strong {
-    display: block;
-
-    color: var(--principal-escuro);
-
-    font-size: 17px;
-}
-
-
-.fila-paciente small {
-    display: block;
-
-    margin-top: 5px;
-
-    color: var(--texto-suave);
-}
-
-
-/* =========================================================
-   CARDS
+   CARDS DOS PACIENTES
    ========================================================= */
 
 .card {
-    padding: 22px;
+    position: relative;
 
-    margin-bottom: 16px;
+    margin-bottom: 18px;
+    padding: 22px 22px 22px 26px;
 
-    background: white;
+    background: var(--branco);
 
-    border: 1px solid #E8D6D6;
-    border-left: 5px solid var(--principal);
+    border: 1px solid var(--borda);
 
-    border-radius: 15px;
+    border-radius: 14px;
 
     box-shadow:
-        0 7px 20px
-        rgba(70, 10, 10, .07);
+        0 5px 18px rgba(63, 7, 7, 0.08);
 
-    transition:
-        transform .2s,
-        box-shadow .2s;
+    overflow: hidden;
 }
 
 
-.card:hover {
-    transform: translateY(-2px);
+/* Barra lateral vinho */
 
-    box-shadow:
-        0 12px 27px
-        rgba(70, 10, 10, .11);
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 6px;
+
+    background: var(--principal);
 }
 
 
 .card h3 {
     margin-top: 0;
-
-    color: var(--principal-escuro);
-
-    font-size: 19px;
+    margin-bottom: 15px;
 }
 
 
 .card p {
-    margin: 9px 0;
+    margin: 8px 0;
+
+    color: var(--texto-suave);
 
     line-height: 1.5;
 }
 
 
 .card b {
-    color: var(--principal);
-}
-
-
-.card small {
-    display: block;
-
-    margin-top: 15px;
-
-    color: var(--texto-suave);
+    color: var(--texto);
 }
 
 
 /* =========================================================
-   FORMULÁRIOS INTERNOS
+   BOTÃO DENTRO DOS CARDS
    ========================================================= */
 
-.container input,
-.container select,
-.container textarea {
+.card button {
+    margin-top: 12px;
+}
+
+
+/* =========================================================
+   FORMULÁRIOS
+   ========================================================= */
+
+input,
+select,
+textarea {
     width: 100%;
 
-    padding: 14px 15px;
-
     margin-bottom: 14px;
+    padding: 12px 14px;
 
     border: 1px solid var(--borda);
-    border-radius: 11px;
+    border-radius: 9px;
 
-    background: white;
+    background: var(--branco);
 
     color: var(--texto);
 
     font-family: inherit;
-    font-size: 15px;
+    font-size: 14px;
 
     outline: none;
 
     transition:
-        border-color .2s,
-        box-shadow .2s,
-        background .2s;
+        border 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 
-.container input::placeholder,
-.container textarea::placeholder {
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--principal);
+
+    box-shadow:
+        0 0 0 3px rgba(104, 14, 14, 0.10);
+}
+
+
+input::placeholder,
+textarea::placeholder {
     color: #9A8588;
 }
 
 
-.container input:hover,
-.container select:hover,
-.container textarea:hover {
-    border-color: #D0AEB0;
-}
-
-
-.container input:focus,
-.container select:focus,
-.container textarea:focus {
-    border-color: var(--principal);
-
-    box-shadow:
-        0 0 0 4px
-        rgba(104, 14, 14, .08);
-
-    background: #FFFEFE;
-}
-
-
-.container textarea {
-    min-height: 120px;
+textarea {
+    min-height: 110px;
 
     resize: vertical;
-}
-
-
-/* =========================================================
-   BOTÕES DOS FORMULÁRIOS
-   ========================================================= */
-
-.container > button,
-.fila-paciente button {
-    padding: 13px 20px;
-
-    border-radius: 10px;
-
-    font-size: 14px;
 }
 
 
@@ -778,19 +327,17 @@ hr {
    ========================================================= */
 
 .paciente-selecionado {
-    margin: 15px 0 20px;
-    padding: 15px 18px;
+    margin-bottom: 18px;
 
-    background: #FFF3F3;
+    padding: 14px 16px;
 
-    border: 1px solid #E8CACA;
+    border-radius: 10px;
+
+    background: #F8EDED;
+
     border-left: 5px solid var(--principal);
 
-    border-radius: 11px;
-
-    color: var(--texto-suave);
-
-    font-size: 14px;
+    color: var(--texto);
 }
 
 
@@ -800,96 +347,414 @@ hr {
 
 
 /* =========================================================
-   CLASSIFICAÇÃO DE RISCO
+   RISCO DOS PACIENTES
    ========================================================= */
 
 .risco {
     display: inline-block;
 
-    padding: 6px 12px;
+    padding: 4px 9px;
 
     border-radius: 20px;
 
-    font-size: 12px;
-    font-weight: 800;
+    font-size: 11px;
+    font-weight: bold;
 
     text-transform: uppercase;
 }
 
 
-#resultado.risco {
-    display: block;
-
-    width: 100%;
-
-    margin: 5px 0 15px;
-
-    padding: 13px;
-
-    text-align: center;
-}
-
-
-/* RISCO BAIXO */
+/* Risco baixo */
 
 .risco.baixo {
-    background: #E7F5EC;
-    color: #237A4B;
+    background: #E4F4EA;
+    color: var(--verde);
 }
 
 
-/* RISCO MÉDIO */
+/* Risco médio */
 
 .risco.medio {
-    background: #FFF3D6;
-    color: #A56A00;
+    background: #FFF1D6;
+    color: var(--amarelo);
 }
 
 
-/* RISCO ALTO */
+/* Risco alto */
 
 .risco.alto {
-    background: #FDE7E5;
-    color: #B42318;
+    background: #FFE2DF;
+    color: var(--vermelho);
 }
 
 
-/* RISCO URGENTE */
+/* Risco urgente */
 
 .risco.urgente {
-    background: #F6D8D8;
-    color: #8B0000;
+    background: var(--principal);
+    color: var(--branco);
 }
 
 
 /* =========================================================
-   ESTADOS
+   MENSAGENS
    ========================================================= */
 
 .vazio {
-    padding: 30px;
+    padding: 25px;
 
     text-align: center;
 
     color: var(--texto-suave);
 
-    background: #FFF9F9;
+    background: #FAF4F4;
 
-    border: 1px dashed #D9BABA;
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
 
 .erro-texto {
     padding: 15px;
 
-    color: #A61B1B;
-
-    background: #FFF0F0;
-
-    border: 1px solid #E5BABA;
-
     border-radius: 10px;
+
+    background: #FFE7E5;
+
+    color: var(--vermelho);
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   CONSULTAS
+   ========================================================= */
+
+.consulta-card {
+    margin-bottom: 18px;
+    padding: 20px;
+
+    border: 1px solid var(--borda);
+
+    border-left: 6px solid var(--principal);
+
+    border-radius: 12px;
+
+    background: var(--branco);
+
+    box-shadow:
+        0 5px 15px rgba(63, 7, 7, 0.07);
+}
+
+
+.consulta-card h3 {
+    margin-top: 0;
+}
+
+
+.consulta-card p {
+    margin: 8px 0;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ÁREA DE ALTA MÉDICA
+   ========================================================= */
+
+#areaAlta {
+    margin-top: 20px;
+}
+
+
+#areaAlta button {
+    background: var(--verde);
+}
+
+
+#areaAlta button:hover {
+    background: #1C633C;
+}
+
+
+#altaPaciente {
+    margin-top: 20px;
+    padding: 22px;
+
+    background: #F2F8F4;
+
+    border: 2px solid var(--verde);
+
+    border-radius: 14px;
+}
+
+
+#altaPaciente h3 {
+    margin-top: 0;
+
+    color: var(--verde);
+}
+
+
+#altaPaciente p {
+    margin: 10px 0;
+
+    color: var(--texto);
+}
+
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+.login-page {
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--principal-escuro),
+            var(--principal)
+        );
+}
+
+
+.login-wrapper {
+    width: 100%;
+    max-width: 430px;
+}
+
+
+.login-card {
+    padding: 35px;
+
+    background: var(--branco);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.25);
+
+    text-align: center;
+}
+
+
+.login-card img {
+    display: block;
+
+    width: 90px;
+    height: 90px;
+
+    margin: 0 auto 20px;
+
+    object-fit: contain;
+}
+
+
+.login-card h1,
+.login-card h2 {
+    margin-bottom: 8px;
+}
+
+
+.login-card p {
+    color: var(--texto-suave);
+}
+
+
+.login-card form {
+    margin-top: 25px;
+
+    text-align: left;
+}
+
+
+.login-card button {
+    width: 100%;
+
+    margin-top: 5px;
+}
+
+
+#mensagem {
+    margin-top: 15px;
+
+    text-align: center;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   TELA DE TV
+   ========================================================= */
+
+.tv-page {
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--principal-escuro),
+            var(--principal)
+        );
+}
+
+
+.tv-container {
+    min-height: calc(100vh - 50px);
+
+    display: grid;
+
+    grid-template-columns: 30% 70%;
+
+    gap: 20px;
+}
+
+
+/* Painel esquerdo */
+
+.tv-left {
+    padding: 25px;
+
+    background: var(--branco);
+
+    border-radius: 18px;
+}
+
+
+/* Painel direito */
+
+.tv-right {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background: var(--branco);
+
+    border-radius: 18px;
+
+    text-align: center;
+}
+
+
+/* Número chamado */
+
+.tv-numero {
+    font-size: 90px;
+
+    font-weight: bold;
+
+    color: var(--principal);
+}
+
+
+/* Nome do paciente */
+
+.tv-paciente {
+    margin-top: 20px;
+
+    font-size: 40px;
+
+    font-weight: bold;
+
+    color: var(--texto);
+}
+
+
+/* Histórico da TV */
+
+.tv-historico {
+    margin-top: 30px;
+}
+
+
+.tv-historico p {
+    padding: 10px;
+
+    border-bottom: 1px solid var(--borda);
+}
+
+
+/* =========================================================
+   ANIMAÇÃO DA CHAMADA
+   ========================================================= */
+
+.chamada {
+    animation:
+        chamada 0.6s ease;
+}
+
+
+@keyframes chamada {
+
+    0% {
+        transform: scale(0.95);
+
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+
+        opacity: 1;
+    }
+
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo {
+    max-width: 180px;
+
+    height: auto;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   IMPRESSÃO
+   ========================================================= */
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .btn-secundario,
+    button {
+        display: none;
+    }
+
+    .container {
+        width: 100%;
+
+        margin: 0;
+
+        padding: 20px;
+
+        box-shadow: none;
+    }
+
 }
 
 
@@ -897,84 +762,81 @@ hr {
    RESPONSIVIDADE
    ========================================================= */
 
-@media (max-width: 700px) {
-
-    .login-page {
-        padding: 18px;
-    }
-
-    .login-card {
-        padding: 35px 25px;
-    }
-
-    .logo {
-        width: 120px;
-        height: 120px;
-    }
-
-    .login-card h1 {
-        font-size: 24px;
-    }
+@media (max-width: 768px) {
 
     .container {
         width: 94%;
+
         margin: 20px auto;
+
         padding: 20px;
     }
 
+
     .topo {
-        align-items: flex-start;
         flex-direction: column;
+
+        align-items: flex-start;
     }
 
-    .topo h2 {
-        font-size: 23px;
-    }
 
     .fila-header {
-        align-items: flex-start;
         flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 10px;
     }
 
-    .fila-paciente {
-        align-items: flex-start;
-        flex-direction: column;
+
+    .tv-container {
+        grid-template-columns: 1fr;
     }
 
-    .fila-paciente button {
+
+    .tv-numero {
+        font-size: 65px;
+    }
+
+
+    .tv-paciente {
+        font-size: 28px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .container {
+        width: 96%;
+
+        padding: 16px;
+    }
+
+
+    .login-card {
+        padding: 25px 20px;
+    }
+
+
+    button {
         width: 100%;
     }
 
-    .acoes {
+
+    .topo button {
         width: 100%;
     }
 
-    .acoes button {
-        flex: 1;
-    }
-}
 
-
-/* =========================================================
-   ANIMAÇÃO DE ENTRADA
-   ========================================================= */
-
-.login-card,
-.container {
-    animation: aparecer .45s ease;
-}
-
-
-@keyframes aparecer {
-
-    from {
-        opacity: 0;
-        transform: translateY(12px);
+    .tv-page {
+        padding: 12px;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    .tv-container {
+        min-height: calc(100vh - 24px);
     }
+
 }
-```
