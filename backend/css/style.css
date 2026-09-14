@@ -1,32 +1,79 @@
+```css
 /* =========================================================
-   LOGIN
+   PALETA PRINCIPAL
+   ========================================================= */
+
+:root {
+    --principal: rgb(104, 14, 14);
+    --principal-hover: #861818;
+    --principal-escuro: #3F0707;
+
+    --claro: #FFF8F8;
+    --branco: #FFFFFF;
+
+    --texto: #2B2022;
+    --texto-suave: #765F63;
+
+    --borda: #E5D3D3;
+
+    --verde: #237A4B;
+    --amarelo: #B87900;
+    --vermelho: #B42318;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--texto);
+    background: #F7EEEE;
+}
+
+
+/* =========================================================
+   PÁGINA DE LOGIN
    ========================================================= */
 
 .login-page {
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    width: 100vw;
-
-    min-height: 100vh;
-
-    margin: 0;
 
     padding: 30px;
 
     background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(255, 255, 255, .12),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(255, 160, 160, .10),
+            transparent 30%
+        ),
         linear-gradient(
             135deg,
-            var(--principal) 0%,
-            #3E1010 52%,
-            var(--claro) 100%
+            #3F0707 0%,
+            #680E0E 50%,
+            #A83232 100%
         );
-
-    box-sizing: border-box;
 }
 
 
@@ -35,38 +82,37 @@
    ========================================================= */
 
 .login-wrapper {
-
     width: 100%;
-
     max-width: 500px;
-
     margin: 0 auto;
 }
 
 
 /* =========================================================
-   CARD
+   CARD DE LOGIN
    ========================================================= */
 
 .login-card {
-
     position: relative;
 
     width: 100%;
+    padding: 44px 45px;
 
-    padding: 42px 45px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, .99),
+            rgba(255, 248, 248, .97)
+        );
 
-    background: var(--claro);
-
-    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, .7);
+    border-radius: 26px;
 
     text-align: center;
 
     box-shadow:
-        0 30px 70px
-        rgba(30, 5, 5, .30);
-
-    box-sizing: border-box;
+        0 35px 80px rgba(45, 7, 15, .30),
+        0 10px 30px rgba(80, 20, 30, .12);
 
     overflow: hidden;
 }
@@ -77,20 +123,22 @@
    ========================================================= */
 
 .login-card::before {
-
     content: "";
 
     position: absolute;
-
     top: 0;
-
     left: 0;
 
     width: 100%;
-
     height: 6px;
 
-    background: var(--principal);
+    background:
+        linear-gradient(
+            90deg,
+            var(--principal-escuro),
+            var(--principal),
+            #A83232
+        );
 }
 
 
@@ -99,63 +147,52 @@
    ========================================================= */
 
 .logo {
-
     width: 145px;
-
     height: 145px;
 
     margin: 5px auto 22px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     background: transparent;
-
     border: none;
-
-    border-radius: 0;
-
     box-shadow: none;
 
     overflow: visible;
 }
 
-
-/* IMAGEM DA LOGO */
-
 .logo img {
-
     width: 100%;
-
     height: 100%;
 
     display: block;
 
     object-fit: contain;
 
+    filter:
+        drop-shadow(
+            0 8px 15px
+            rgba(104, 14, 14, .15)
+        );
 }
 
 
 /* =========================================================
-   TÍTULO
+   TÍTULO LOGIN
    ========================================================= */
 
 .login-card h1 {
-
     margin: 0;
 
-    color: var(--principal);
+    color: var(--principal-escuro);
 
-    font-size: 28px;
-
+    font-size: 29px;
     font-weight: 800;
 
     line-height: 1.2;
-
-    letter-spacing: -.6px;
+    letter-spacing: -.7px;
 }
 
 
@@ -163,160 +200,781 @@
    SUBTÍTULO
    ========================================================= */
 
-.login-card .subtitulo {
-
+.subtitulo {
     margin: 9px 0 28px;
 
     color: var(--texto-suave);
 
     font-size: 15px;
-
     line-height: 1.5;
 }
 
 
 /* =========================================================
-   CAMPOS
+   CAMPOS DO LOGIN
    ========================================================= */
 
 .login-card .campo {
-
     width: 100%;
-
     text-align: left;
 }
 
 
-/* LABEL */
+/* =========================================================
+   LABEL
+   ========================================================= */
 
 .login-card label {
-
     display: block;
 
     margin-bottom: 7px;
 
-    color: var(--principal);
+    color: var(--principal-escuro);
 
     font-size: 14px;
-
-    font-weight: 750;
+    font-weight: 700;
 }
 
 
-/* INPUT */
+/* =========================================================
+   INPUT LOGIN
+   ========================================================= */
 
 .login-card input {
-
     width: 100%;
 
     padding: 15px 16px;
-
     margin-bottom: 17px;
 
     background: var(--branco);
 
     border: 1px solid var(--borda);
-
-    border-radius: 11px;
+    border-radius: 12px;
 
     color: var(--texto);
 
     font-family: inherit;
-
     font-size: 15px;
 
     outline: none;
 
-    box-sizing: border-box;
-
     transition:
-        border-color .2s,
-        box-shadow .2s,
-        transform .2s;
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease,
+        background .2s ease;
 }
-
-
-/* PLACEHOLDER */
 
 .login-card input::placeholder {
-
-    color: #9A8787;
+    color: #A58F93;
 }
 
-
-/* INPUT FOCADO */
+.login-card input:hover {
+    border-color: #D0AEB0;
+    background: #FFFCFC;
+}
 
 .login-card input:focus {
-
     border-color: var(--principal);
 
     box-shadow:
         0 0 0 4px
-        rgba(87, 26, 26, .10);
+        rgba(104, 14, 14, .09),
+        0 6px 18px
+        rgba(104, 14, 14, .07);
 
     transform: translateY(-1px);
 }
 
 
 /* =========================================================
-   BOTÃO ENTRAR
+   BOTÕES GERAIS
    ========================================================= */
 
+button {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   BOTÃO PRINCIPAL
+   ========================================================= */
+
+.login-card button,
+.container > button,
+.container button:not(.btn-secundario):not(.btn-tv) {
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--principal),
+            var(--principal-hover)
+        );
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.login-card button:hover,
+.container > button:hover,
+.container button:not(.btn-secundario):not(.btn-tv):hover {
+    background:
+        linear-gradient(
+            135deg,
+            #791111,
+            #9A2020
+        );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 24px
+        rgba(104, 14, 14, .22);
+}
+
+.login-card button:active,
+.container button:active {
+    transform: translateY(0);
+}
+
 .login-card button {
-
     width: 100%;
-
     padding: 15px;
 
     margin-top: 4px;
 
-    border: none;
-
-    border-radius: 11px;
-
-    background: var(--principal);
-
-    color: var(--claro);
-
-    font-family: inherit;
+    border-radius: 12px;
 
     font-size: 15px;
+}
 
+.login-card button:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   MENSAGEM LOGIN
+   ========================================================= */
+
+#mensagem {
+    margin-top: 18px;
+
+    color: var(--vermelho);
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   PÁGINAS INTERNAS
+   ========================================================= */
+
+body:not(.login-page) {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(104, 14, 14, .07),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #FFF9F9,
+            #F5EAEA
+        );
+}
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.container {
+    width: 92%;
+    max-width: 1200px;
+
+    margin: 35px auto;
+    padding: 30px;
+
+    background: rgba(255, 255, 255, .96);
+
+    border: 1px solid #EADADA;
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 55px
+        rgba(70, 10, 10, .10);
+}
+
+
+/* =========================================================
+   TOPO
+   ========================================================= */
+
+.topo {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+.topo h2 {
+    margin: 0;
+
+    color: var(--principal-escuro);
+
+    font-size: 27px;
     font-weight: 800;
+}
+
+
+.topo .subtitulo {
+    margin: 7px 0 0;
+}
+
+
+/* =========================================================
+   LINHAS
+   ========================================================= */
+
+hr {
+    margin: 25px 0;
+
+    border: none;
+    border-top: 1px solid #EBDADA;
+}
+
+
+/* =========================================================
+   BOTÃO SECUNDÁRIO
+   ========================================================= */
+
+.btn-secundario {
+    padding: 11px 18px;
+
+    border: 1px solid #D9BABA;
+    border-radius: 10px;
+
+    background: white;
+    color: var(--principal);
+
+    font-size: 14px;
+    font-weight: 700;
 
     cursor: pointer;
 
     transition:
         background .2s,
-        transform .15s,
+        color .2s,
+        transform .15s;
+}
+
+
+.btn-secundario:hover {
+    background: var(--principal);
+    color: white;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   BOTÃO TV
+   ========================================================= */
+
+.btn-tv {
+    padding: 11px 18px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: var(--principal);
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.btn-tv:hover {
+    background: var(--principal-hover);
+
+    transform: translateY(-1px);
+}
+
+
+.acoes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* =========================================================
+   CABEÇALHO DA FILA
+   ========================================================= */
+
+.fila-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+}
+
+
+.fila-header h3,
+.container > h3 {
+    color: var(--principal-escuro);
+
+    margin-top: 0;
+
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   FILA DE PACIENTES
+   ========================================================= */
+
+.fila-box {
+    padding: 20px;
+
+    background: #FFFDFD;
+
+    border: 1px solid #EEDDDD;
+    border-radius: 16px;
+}
+
+
+/* =========================================================
+   PACIENTE NA FILA
+   ========================================================= */
+
+.fila-paciente {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 18px;
+
+    margin-bottom: 12px;
+
+    background: white;
+
+    border: 1px solid #E8D6D6;
+    border-left: 5px solid var(--principal);
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 5px 16px
+        rgba(70, 10, 10, .06);
+
+    transition: .2s;
+}
+
+
+.fila-paciente:hover {
+    transform: translateX(3px);
+
+    box-shadow:
+        0 8px 22px
+        rgba(104, 14, 14, .10);
+}
+
+
+.fila-paciente strong {
+    display: block;
+
+    color: var(--principal-escuro);
+
+    font-size: 17px;
+}
+
+
+.fila-paciente small {
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--texto-suave);
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.card {
+    padding: 22px;
+
+    margin-bottom: 16px;
+
+    background: white;
+
+    border: 1px solid #E8D6D6;
+    border-left: 5px solid var(--principal);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 7px 20px
+        rgba(70, 10, 10, .07);
+
+    transition:
+        transform .2s,
         box-shadow .2s;
 }
 
 
-/* HOVER */
-
-.login-card button:hover {
-
-    background: var(--principal-hover);
-
+.card:hover {
     transform: translateY(-2px);
 
     box-shadow:
-        0 10px 25px
-        rgba(87, 26, 26, .25);
+        0 12px 27px
+        rgba(70, 10, 10, .11);
 }
 
 
-/* CLICK */
+.card h3 {
+    margin-top: 0;
 
-.login-card button:active {
+    color: var(--principal-escuro);
 
-    transform: translateY(0);
+    font-size: 19px;
 }
 
 
-/* BOTÃO DESABILITADO */
+.card p {
+    margin: 9px 0;
 
-.login-card button:disabled {
+    line-height: 1.5;
+}
 
-    opacity: .
+
+.card b {
+    color: var(--principal);
+}
+
+
+.card small {
+    display: block;
+
+    margin-top: 15px;
+
+    color: var(--texto-suave);
+}
+
+
+/* =========================================================
+   FORMULÁRIOS INTERNOS
+   ========================================================= */
+
+.container input,
+.container select,
+.container textarea {
+    width: 100%;
+
+    padding: 14px 15px;
+
+    margin-bottom: 14px;
+
+    border: 1px solid var(--borda);
+    border-radius: 11px;
+
+    background: white;
+
+    color: var(--texto);
+
+    font-family: inherit;
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+
+.container input::placeholder,
+.container textarea::placeholder {
+    color: #9A8588;
+}
+
+
+.container input:hover,
+.container select:hover,
+.container textarea:hover {
+    border-color: #D0AEB0;
+}
+
+
+.container input:focus,
+.container select:focus,
+.container textarea:focus {
+    border-color: var(--principal);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(104, 14, 14, .08);
+
+    background: #FFFEFE;
+}
+
+
+.container textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+
+/* =========================================================
+   BOTÕES DOS FORMULÁRIOS
+   ========================================================= */
+
+.container > button,
+.fila-paciente button {
+    padding: 13px 20px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   PACIENTE SELECIONADO
+   ========================================================= */
+
+.paciente-selecionado {
+    margin: 15px 0 20px;
+    padding: 15px 18px;
+
+    background: #FFF3F3;
+
+    border: 1px solid #E8CACA;
+    border-left: 5px solid var(--principal);
+
+    border-radius: 11px;
+
+    color: var(--texto-suave);
+
+    font-size: 14px;
+}
+
+
+.paciente-selecionado strong {
+    color: var(--principal);
+}
+
+
+/* =========================================================
+   CLASSIFICAÇÃO DE RISCO
+   ========================================================= */
+
+.risco {
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+
+#resultado.risco {
+    display: block;
+
+    width: 100%;
+
+    margin: 5px 0 15px;
+
+    padding: 13px;
+
+    text-align: center;
+}
+
+
+/* RISCO BAIXO */
+
+.risco.baixo {
+    background: #E7F5EC;
+    color: #237A4B;
+}
+
+
+/* RISCO MÉDIO */
+
+.risco.medio {
+    background: #FFF3D6;
+    color: #A56A00;
+}
+
+
+/* RISCO ALTO */
+
+.risco.alto {
+    background: #FDE7E5;
+    color: #B42318;
+}
+
+
+/* RISCO URGENTE */
+
+.risco.urgente {
+    background: #F6D8D8;
+    color: #8B0000;
+}
+
+
+/* =========================================================
+   ESTADOS
+   ========================================================= */
+
+.vazio {
+    padding: 30px;
+
+    text-align: center;
+
+    color: var(--texto-suave);
+
+    background: #FFF9F9;
+
+    border: 1px dashed #D9BABA;
+    border-radius: 12px;
+}
+
+
+.erro-texto {
+    padding: 15px;
+
+    color: #A61B1B;
+
+    background: #FFF0F0;
+
+    border: 1px solid #E5BABA;
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .login-page {
+        padding: 18px;
+    }
+
+    .login-card {
+        padding: 35px 25px;
+    }
+
+    .logo {
+        width: 120px;
+        height: 120px;
+    }
+
+    .login-card h1 {
+        font-size: 24px;
+    }
+
+    .container {
+        width: 94%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .topo {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .topo h2 {
+        font-size: 23px;
+    }
+
+    .fila-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .fila-paciente {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .fila-paciente button {
+        width: 100%;
+    }
+
+    .acoes {
+        width: 100%;
+    }
+
+    .acoes button {
+        flex: 1;
+    }
+}
+
+
+/* =========================================================
+   ANIMAÇÃO DE ENTRADA
+   ========================================================= */
+
+.login-card,
+.container {
+    animation: aparecer .45s ease;
+}
+
+
+@keyframes aparecer {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+```
