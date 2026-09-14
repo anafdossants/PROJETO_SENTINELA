@@ -1,306 +1,426 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+/* =========================================================
+   PALETA
+   ========================================================= */
 
-<head>
+:root {
 
-    <meta charset="UTF-8">
+    --principal: #8B1E2D;
+    --principal-hover: #A62538;
+    --principal-escuro: #3B0D15;
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    --claro: #FFF8F8;
+    --branco: #FFFFFF;
 
-    <title>Atendimento | Gestão Clínica</title>
+    --texto: #2B2022;
+    --texto-suave: #765F63;
 
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
-</head>
-
-<body>
-
-<div class="container">
-
-    <!-- =====================================================
-         CABEÇALHO
-         ===================================================== -->
-
-    <div class="pagina-header">
-
-        <div>
-
-            <h2>
-                Atendimento
-            </h2>
-
-            <p class="subtitulo">
-                Cadastro e recepção de pacientes
-            </p>
-
-        </div>
-
-        <div class="icone">
-            🏥
-        </div>
-
-    </div>
+    --borda: #E8DADC;
+}
 
 
-    <!-- =====================================================
-         DESCRIÇÃO
-         ===================================================== -->
+/* =========================================================
+   LOGIN
+   ========================================================= */
 
-    <div class="descricao">
+.login-page {
 
-        Preencha os dados do paciente para
-        encaminhá-lo à fila de triagem.
+    display: flex;
 
-    </div>
+    align-items: center;
 
+    justify-content: center;
 
-    <!-- =====================================================
-         NOME
-         ===================================================== -->
+    width: 100vw;
 
-    <label
-        class="campo-label"
-        for="nome"
-    >
-        Nome do paciente
-    </label>
+    min-height: 100vh;
 
-    <input
-        id="nome"
-        type="text"
-        placeholder="Digite o nome completo"
-        autocomplete="name"
-    >
+    margin: 0;
 
+    padding: 30px;
 
-    <!-- =====================================================
-         CPF
-         ===================================================== -->
-
-    <label
-        class="campo-label"
-        for="cpf"
-    >
-        CPF
-    </label>
-
-    <input
-        id="cpf"
-        type="text"
-        placeholder="Digite o CPF"
-        inputmode="numeric"
-        autocomplete="off"
-    >
-
-
-    <!-- =====================================================
-         TIPO DE ATENDIMENTO
-         ===================================================== -->
-
-    <label
-        class="campo-label"
-        for="tipo"
-    >
-        Tipo de atendimento
-    </label>
-
-    <select id="tipo">
-
-        <option value="Convenio">
-            Convênio
-        </option>
-
-        <option value="Particular">
-            Particular
-        </option>
-
-    </select>
-
-
-    <!-- =====================================================
-         DOCUMENTO / FOTO
-         ===================================================== -->
-
-    <label
-        class="campo-label"
-        for="foto"
-    >
-        Documento / Foto
-    </label>
-
-    <input
-        type="file"
-        id="foto"
-        accept="image/*"
-    >
-
-
-    <!-- =====================================================
-         BOTÃO
-         ===================================================== -->
-
-    <button
-        type="button"
-        onclick="cadastrar()"
-        style="width:100%;"
-    >
-        Cadastrar paciente
-    </button>
-
-</div>
-
-
-<script>
-
-async function cadastrar() {
-
-    const nome =
-        document
-            .getElementById("nome")
-            .value
-            .trim();
-
-    const cpf =
-        document
-            .getElementById("cpf")
-            .value
-            .trim();
-
-    const tipo =
-        document
-            .getElementById("tipo")
-            .value;
-
-
-    /* ======================================================
-       VALIDAÇÃO
-       ====================================================== */
-
-    if (!nome) {
-
-        alert(
-            "Digite o nome do paciente."
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(255, 255, 255, .12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(255, 120, 135, .12),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            var(--principal-escuro) 0%,
+            var(--principal) 48%,
+            #C44758 100%
         );
 
-        document
-            .getElementById("nome")
-            .focus();
-
-        return;
-    }
+    box-sizing: border-box;
+}
 
 
-    /* ======================================================
-       ENVIO PARA O SERVIDOR
-       ====================================================== */
+/* =========================================================
+   ÁREA DO LOGIN
+   ========================================================= */
 
-    try {
+.login-wrapper {
 
-        const response =
-            await fetch(
-                "/atendimento",
-                {
+    width: 100%;
 
-                    method: "POST",
+    max-width: 500px;
 
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        nome,
-                        cpf,
-                        tipo
-
-                    })
-
-                }
-            );
+    margin: 0 auto;
+}
 
 
-        const data =
-            await response.json();
+/* =========================================================
+   CARD
+   ========================================================= */
 
+.login-card {
 
-        /* ==================================================
-           ERRO DA API
-           ================================================== */
+    position: relative;
 
-        if (!response.ok) {
+    width: 100%;
 
-            throw new Error(
-                data.erro ||
-                "Erro ao cadastrar paciente."
-            );
+    padding: 44px 45px;
 
-        }
-
-
-        /* ==================================================
-           SUCESSO
-           ================================================== */
-
-        alert(
-            "✅ Paciente cadastrado com sucesso!\n\n" +
-            "Paciente enviado para a triagem."
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, .98),
+            rgba(255, 248, 248, .96)
         );
 
+    border: 1px solid rgba(255, 255, 255, .65);
 
-        /* ==================================================
-           LIMPAR FORMULÁRIO
-           ================================================== */
+    border-radius: 26px;
 
-        document
-            .getElementById("nome")
-            .value = "";
+    text-align: center;
 
-        document
-            .getElementById("cpf")
-            .value = "";
+    box-shadow:
+        0 35px 80px rgba(45, 7, 15, .28),
+        0 10px 30px rgba(80, 20, 30, .10);
 
-        document
-            .getElementById("tipo")
-            .value = "Convenio";
+    box-sizing: border-box;
 
-        document
-            .getElementById("foto")
-            .value = "";
+    overflow: hidden;
+
+    backdrop-filter: blur(10px);
+}
 
 
-        document
-            .getElementById("nome")
-            .focus();
+/* =========================================================
+   BARRA SUPERIOR
+   ========================================================= */
 
+.login-card::before {
 
-    } catch (error) {
+    content: "";
 
-        console.error(
-            "Erro ao cadastrar paciente:",
-            error
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--principal-escuro),
+            var(--principal),
+            #D95768
         );
+}
 
-        alert(
-            "❌ " +
-            (
-                error.message ||
-                "Não foi possível cadastrar o paciente."
-            )
-        );
 
-    }
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo {
+
+    width: 145px;
+
+    height: 145px;
+
+    margin: 5px auto 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: transparent;
+
+    border: none;
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    overflow: visible;
 
 }
 
-</script>
 
-</body>
+/* IMAGEM DA LOGO */
 
-</html>
+.logo img {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 8px 15px
+            rgba(139, 30, 45, .12)
+        );
+
+}
+
+
+/* =========================================================
+   TÍTULO
+   ========================================================= */
+
+.login-card h1 {
+
+    margin: 0;
+
+    color: var(--principal-escuro);
+
+    font-size: 29px;
+
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    letter-spacing: -.7px;
+
+}
+
+
+/* =========================================================
+   SUBTÍTULO
+   ========================================================= */
+
+.login-card .subtitulo {
+
+    margin: 9px 0 28px;
+
+    color: var(--texto-suave);
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   CAMPOS
+   ========================================================= */
+
+.login-card .campo {
+
+    width: 100%;
+
+    text-align: left;
+
+}
+
+
+/* LABEL */
+
+.login-card label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--principal-escuro);
+
+    font-size: 14px;
+
+    font-weight: 750;
+
+}
+
+
+/* INPUT */
+
+.login-card input {
+
+    width: 100%;
+
+    padding: 15px 16px;
+
+    margin-bottom: 17px;
+
+    background: #FFFFFF;
+
+    border: 1px solid var(--borda);
+
+    border-radius: 12px;
+
+    color: var(--texto);
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    outline: none;
+
+    box-sizing: border-box;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease,
+        background .2s ease;
+
+}
+
+
+/* PLACEHOLDER */
+
+.login-card input::placeholder {
+
+    color: #A58F93;
+
+}
+
+
+/* INPUT HOVER */
+
+.login-card input:hover {
+
+    border-color: #D8B9BE;
+
+    background: #FFFCFC;
+
+}
+
+
+/* INPUT FOCADO */
+
+.login-card input:focus {
+
+    border-color: var(--principal);
+
+    background: #FFFFFF;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(139, 30, 45, .09),
+        0 6px 18px
+        rgba(139, 30, 45, .07);
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================================
+   BOTÃO ENTRAR
+   ========================================================= */
+
+.login-card button {
+
+    width: 100%;
+
+    padding: 15px;
+
+    margin-top: 4px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--principal),
+            #A62538
+        );
+
+    color: #FFFFFF;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        transform .15s ease,
+        box-shadow .2s ease;
+
+    box-shadow:
+        0 8px 20px
+        rgba(139, 30, 45, .20);
+
+}
+
+
+/* HOVER */
+
+.login-card button:hover {
+
+    background:
+        linear-gradient(
+            135deg,
+            #9D2334,
+            #B93248
+        );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 28px
+        rgba(139, 30, 45, .28);
+
+}
+
+
+/* CLICK */
+
+.login-card button:active {
+
+    transform: translateY(0);
+
+    box-shadow:
+        0 5px 12px
+        rgba(139, 30, 45, .18);
+
+}
+
+
+/* BOTÃO DESABILITADO */
+
+.login-card button:disabled {
+
+    opacity: .55;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+
+}
