@@ -161,7 +161,6 @@
 
     <h3>Consulta</h3>
 
-
     <div
         id="pacienteSelecionado"
         class="paciente-selecionado"
@@ -210,12 +209,9 @@
 
 <script>
 
-
 // ======================================================
 // CONFIGURAÇÃO DA API
 // ======================================================
-
-// API PUBLICADA NO RENDER
 
 const API_URL =
     "https://projeto-sentinela-1-792p.onrender.com";
@@ -276,7 +272,8 @@ async function carregarTriagens() {
                     method: "GET",
                     headers: {
                         "Accept": "application/json"
-                    }
+                    },
+                    cache: "no-cache"
                 }
             );
 
@@ -294,12 +291,6 @@ async function carregarTriagens() {
             await resposta.json();
 
 
-        console.log(
-            "Triagens recebidas:",
-            triagens
-        );
-
-
         if (!Array.isArray(triagens)) {
 
             throw new Error(
@@ -309,9 +300,13 @@ async function carregarTriagens() {
         }
 
 
-        // ----------------------------------------------
-        // FILTRAR SOMENTE AGUARDANDO MÉDICO
-        // ----------------------------------------------
+        console.log(
+            "Triagens recebidas:",
+            triagens
+        );
+
+
+        // Somente pacientes aguardando médico
 
         const fila =
             triagens.filter(
@@ -326,9 +321,7 @@ async function carregarTriagens() {
             );
 
 
-        // ----------------------------------------------
-        // NENHUM PACIENTE
-        // ----------------------------------------------
+        // Nenhum paciente
 
         if (fila.length === 0) {
 
@@ -351,9 +344,7 @@ async function carregarTriagens() {
         container.innerHTML = "";
 
 
-        // ----------------------------------------------
-        // EXIBIR PACIENTES
-        // ----------------------------------------------
+        // Mostrar pacientes
 
         fila.forEach(
             function (triagem) {
@@ -461,17 +452,49 @@ async function carregarTriagens() {
 
                     </p>
 
-                    <button
-                        class="btn-atender"
-                        onclick="selecionarPaciente(${Number(triagem.id)})"
-                    >
-                        🩺 Atender paciente
-                    </button>
-
                 `;
 
 
-                container.appendChild(card);
+                // IMPORTANTE:
+                // O botão agora chama a função passando
+                // o ID da triagem.
+
+                const botaoAtender =
+                    document.createElement("button");
+
+
+                botaoAtender.className =
+                    "btn-atender";
+
+
+                botaoAtender.textContent =
+                    "🩺 Atender paciente";
+
+
+                botaoAtender.type =
+                    "button";
+
+
+                botaoAtender.addEventListener(
+                    "click",
+                    function () {
+
+                        selecionarPaciente(
+                            triagem
+                        );
+
+                    }
+                );
+
+
+                card.appendChild(
+                    botaoAtender
+                );
+
+
+                container.appendChild(
+                    card
+                );
 
             }
         );
@@ -511,11 +534,6 @@ async function carregarTriagens() {
                     erro.message
                 )}
 
-                <br><br>
-
-                Verifique se a API do Render
-                está online.
-
             </div>
 
         `;
@@ -534,38 +552,19 @@ async function carregarTriagens() {
 // ======================================================
 // SELECIONAR PACIENTE
 // ======================================================
+//
+// NÃO FAZ MAIS:
+// fetch("/triagens/:id")
+//
+// O paciente já veio na lista.
+// Portanto usamos diretamente o objeto recebido.
+// ======================================================
 
-async function selecionarPaciente(id) {
+function selecionarPaciente(triagem) {
 
     try {
 
-        const resposta =
-            await fetch(
-                `${API_URL}/triagens/${id}`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Accept":
-                            "application/json"
-                    }
-                }
-            );
-
-
-        if (!resposta.ok) {
-
-            throw new Error(
-                `Erro HTTP ${resposta.status}`
-            );
-
-        }
-
-
-        const paciente =
-            await resposta.json();
-
-
-        if (!paciente) {
+        if (!triagem) {
 
             alert(
                 "Paciente não encontrado."
@@ -577,12 +576,16 @@ async function selecionarPaciente(id) {
 
 
         pacienteAtual =
-            paciente;
+            triagem;
 
 
-        // ----------------------------------------------
-        // MOSTRAR PACIENTE
-        // ----------------------------------------------
+        console.log(
+            "Paciente selecionado:",
+            pacienteAtual
+        );
+
+
+        // Mostrar paciente selecionado
 
         document.getElementById(
             "pacienteSelecionado"
@@ -593,45 +596,48 @@ async function selecionarPaciente(id) {
             </strong>
 
             ${escapeHTML(
-                paciente.nome ||
+                pacienteAtual.nome ||
                 "Paciente"
             )}
 
         `;
 
 
+        // Nome
+
         document.getElementById(
             "paciente"
         ).value =
-            paciente.nome || "";
+            pacienteAtual.nome || "";
 
 
-        // ----------------------------------------------
-        // LIMPAR CONSULTA
-        // ----------------------------------------------
+        // Limpar diagnóstico
 
         document.getElementById(
             "diagnostico"
         ).value = "";
 
+
+        // Limpar medicação
 
         document.getElementById(
             "medicacao"
         ).value = "";
 
 
+        // Limpar observações
+
         document.getElementById(
             "obs"
         ).value = "";
 
 
-        // ----------------------------------------------
-        // FOCO
-        // ----------------------------------------------
+        // Ir para diagnóstico
 
         document.getElementById(
             "diagnostico"
         ).focus();
+
 
     }
 
@@ -675,7 +681,8 @@ async function carregarMedicacoes() {
                     headers: {
                         "Accept":
                             "application/json"
-                    }
+                    },
+                    cache: "no-cache"
                 }
             );
 
@@ -875,21 +882,25 @@ async function salvarConsulta() {
             );
 
 
-        let resultado;
+        const texto =
+            await resposta.text();
+
+
+        let resultado = {};
 
 
         try {
 
             resultado =
-                await resposta.json();
+                texto
+                    ? JSON.parse(texto)
+                    : {};
 
         }
 
         catch {
 
-            throw new Error(
-                "A API não retornou uma resposta válida."
-            );
+            resultado = {};
 
         }
 
@@ -915,11 +926,10 @@ async function salvarConsulta() {
         );
 
 
-        // ----------------------------------------------
-        // LIMPAR
-        // ----------------------------------------------
+        // Limpar paciente
 
-        pacienteAtual = null;
+        pacienteAtual =
+            null;
 
 
         document.getElementById(
@@ -948,9 +958,7 @@ async function salvarConsulta() {
         ).value = "";
 
 
-        // ----------------------------------------------
-        // ATUALIZAR FILA
-        // ----------------------------------------------
+        // Atualizar fila
 
         await carregarTriagens();
 
@@ -1038,7 +1046,6 @@ setInterval(
     },
     5000
 );
-
 
 </script>
 
