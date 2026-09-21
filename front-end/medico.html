@@ -91,6 +91,11 @@
             text-align: center;
         }
 
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
     </style>
 
 </head>
@@ -98,10 +103,6 @@
 <body>
 
 <div class="container">
-
-    <!-- ================================================= -->
-    <!-- CABEÇALHO -->
-    <!-- ================================================= -->
 
     <div class="topo">
 
@@ -127,9 +128,7 @@
     <hr>
 
 
-    <!-- ================================================= -->
     <!-- FILA MÉDICA -->
-    <!-- ================================================= -->
 
     <div class="fila-header">
 
@@ -158,9 +157,7 @@
     <hr>
 
 
-    <!-- ================================================= -->
     <!-- CONSULTA -->
-    <!-- ================================================= -->
 
     <h3>Consulta</h3>
 
@@ -202,6 +199,7 @@
 
 
     <button
+        id="btnFinalizar"
         onclick="salvarConsulta()"
     >
         Finalizar consulta
@@ -212,736 +210,835 @@
 
 <script>
 
-    // =====================================================
-    // CONFIGURAÇÃO DA API
-    // =====================================================
 
-    /*
-        ALTERE ESTA URL se sua API estiver em outro endereço.
+// ======================================================
+// CONFIGURAÇÃO DA API
+// ======================================================
 
-        Exemplo local:
-        http://localhost:3000
+// API PUBLICADA NO RENDER
 
-        Se seu frontend e backend estiverem
-        em portas diferentes, mantenha a URL completa.
-    */
-
-    const API_URL = "http://localhost:3000";
+const API_URL =
+    "https://projeto-sentinela-1-792p.onrender.com";
 
 
-    // =====================================================
-    // VARIÁVEIS
-    // =====================================================
+// ======================================================
+// VARIÁVEIS
+// ======================================================
 
-    let pacienteAtual = null;
-
-
-    // =====================================================
-    // INICIALIZAÇÃO
-    // =====================================================
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        function () {
-
-            carregarTriagens();
-
-            carregarMedicacoes();
-
-        }
-    );
+let pacienteAtual = null;
 
 
-    // =====================================================
-    // CARREGAR TRIAGENS
-    // =====================================================
+// ======================================================
+// INICIALIZAÇÃO
+// ======================================================
 
-    async function carregarTriagens() {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-        const container =
-            document.getElementById("triagens");
+        carregarTriagens();
 
-        const botao =
-            document.getElementById("btnAtualizar");
+        carregarMedicacoes();
 
-
-        container.innerHTML = `
-            <div class="carregando">
-                🔄 Atualizando fila...
-            </div>
-        `;
+    }
+);
 
 
-        botao.disabled = true;
+// ======================================================
+// CARREGAR FILA MÉDICA
+// ======================================================
+
+async function carregarTriagens() {
+
+    const container =
+        document.getElementById("triagens");
+
+    const botao =
+        document.getElementById("btnAtualizar");
 
 
-        try {
-
-            const resposta =
-                await fetch(
-                    `${API_URL}/triagens`
-                );
-
-
-            if (!resposta.ok) {
-
-                throw new Error(
-                    `Erro HTTP ${resposta.status}`
-                );
-
-            }
+    container.innerHTML = `
+        <div class="carregando">
+            🔄 Atualizando fila...
+        </div>
+    `;
 
 
-            const triagens =
-                await resposta.json();
+    botao.disabled = true;
 
 
-            console.log(
-                "Triagens recebidas:",
-                triagens
-            );
+    try {
 
-
-            /*
-                Mostra somente pacientes
-                aguardando o médico.
-            */
-
-            const fila =
-                triagens.filter(
-                    function (triagem) {
-
-                        return (
-                            triagem.status ===
-                            "aguardando_medico"
-                        );
-
+        const resposta =
+            await fetch(
+                `${API_URL}/triagens`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json"
                     }
-                );
-
-
-            // =================================================
-            // NENHUM PACIENTE
-            // =================================================
-
-            if (fila.length === 0) {
-
-                container.innerHTML = `
-                    <div class="mensagem-vazia">
-
-                        🟢 Nenhum paciente
-                        aguardando consulta.
-
-                    </div>
-                `;
-
-                return;
-
-            }
-
-
-            // =================================================
-            // LIMPA A LISTA
-            // =================================================
-
-            container.innerHTML = "";
-
-
-            // =================================================
-            // MOSTRA OS PACIENTES
-            // =================================================
-
-            fila.forEach(
-                function (triagem) {
-
-                    const card =
-                        document.createElement("div");
-
-
-                    card.className =
-                        "card-paciente";
-
-
-                    const risco =
-                        triagem.risco ||
-                        "verde";
-
-
-                    const classeRisco =
-                        `risco-${risco}`;
-
-
-                    const textoRisco =
-                        risco === "vermelho"
-                            ? "🔴 Risco vermelho"
-                            : risco === "amarelo"
-                                ? "🟡 Risco amarelo"
-                                : "🟢 Risco verde";
-
-
-                    card.innerHTML = `
-
-                        <h4>
-                            👤 ${escapeHTML(
-                                triagem.nome ||
-                                "Paciente"
-                            )}
-                        </h4>
-
-                        <p>
-                            <strong>Sintoma:</strong>
-                            ${escapeHTML(
-                                triagem.sintoma ||
-                                "Não informado"
-                            )}
-                        </p>
-
-                        <p>
-                            <strong>Temperatura:</strong>
-                            ${
-                                triagem.temperatura !== null &&
-                                triagem.temperatura !== undefined
-                                    ? triagem.temperatura + " °C"
-                                    : "Não informada"
-                            }
-                        </p>
-
-                        <p>
-                            <strong>Alergia:</strong>
-                            ${escapeHTML(
-                                triagem.alergia ||
-                                "Não informado"
-                            )}
-                        </p>
-
-                        <p>
-                            <strong>Observação:</strong>
-                            ${escapeHTML(
-                                triagem.observacao ||
-                                "Nenhuma"
-                            )}
-                        </p>
-
-                        <p>
-                            <span
-                                class="risco ${classeRisco}"
-                            >
-                                ${textoRisco}
-                            </span>
-                        </p>
-
-                        <button
-                            class="btn-atender"
-                            onclick="selecionarPaciente(${triagem.id})"
-                        >
-                            🩺 Atender paciente
-                        </button>
-
-                    `;
-
-
-                    container.appendChild(card);
-
                 }
             );
 
-        }
 
-        catch (erro) {
+        if (!resposta.ok) {
 
-            console.error(
-                "Erro ao carregar triagens:",
-                erro
-            );
-
-
-            container.innerHTML = `
-
-                <div class="mensagem-erro">
-
-                    ❌ Não foi possível carregar
-                    a fila médica.
-
-                    <br><br>
-
-                    Verifique se a API está
-                    funcionando em:
-
-                    <br>
-
-                    <strong>
-                        ${API_URL}
-                    </strong>
-
-                    <br><br>
-
-                    Erro:
-                    ${escapeHTML(erro.message)}
-
-                </div>
-
-            `;
-
-        }
-
-        finally {
-
-            botao.disabled = false;
-
-        }
-
-    }
-
-
-    // =====================================================
-    // SELECIONAR PACIENTE
-    // =====================================================
-
-    async function selecionarPaciente(id) {
-
-        try {
-
-            const resposta =
-                await fetch(
-                    `${API_URL}/triagens`
-                );
-
-
-            if (!resposta.ok) {
-
-                throw new Error(
-                    "Não foi possível buscar as triagens."
-                );
-
-            }
-
-
-            const triagens =
-                await resposta.json();
-
-
-            const paciente =
-                triagens.find(
-                    function (triagem) {
-
-                        return Number(
-                            triagem.id
-                        ) === Number(id);
-
-                    }
-                );
-
-
-            if (!paciente) {
-
-                alert(
-                    "Paciente não encontrado."
-                );
-
-                return;
-
-            }
-
-
-            pacienteAtual = paciente;
-
-
-            // =================================================
-            // MOSTRA PACIENTE
-            // =================================================
-
-            document.getElementById(
-                "pacienteSelecionado"
-            ).innerHTML = `
-
-                🩺 <strong>
-                    Paciente selecionado:
-                </strong>
-
-                ${escapeHTML(
-                    paciente.nome ||
-                    "Paciente"
-                )}
-
-            `;
-
-
-            document.getElementById(
-                "paciente"
-            ).value =
-                paciente.nome || "";
-
-
-            // =================================================
-            // LIMPA CONSULTA
-            // =================================================
-
-            document.getElementById(
-                "diagnostico"
-            ).value = "";
-
-
-            document.getElementById(
-                "medicacao"
-            ).value = "";
-
-
-            document.getElementById(
-                "obs"
-            ).value = "";
-
-
-            // =================================================
-            // FOCO
-            // =================================================
-
-            document.getElementById(
-                "diagnostico"
-            ).focus();
-
-        }
-
-        catch (erro) {
-
-            console.error(
-                erro
-            );
-
-            alert(
-                "Erro ao selecionar paciente."
+            throw new Error(
+                `Erro HTTP ${resposta.status}`
             );
 
         }
 
-    }
+
+        const triagens =
+            await resposta.json();
 
 
-    // =====================================================
-    // CARREGAR MEDICAÇÕES
-    // =====================================================
+        console.log(
+            "Triagens recebidas:",
+            triagens
+        );
 
-    async function carregarMedicacoes() {
 
-        const select =
-            document.getElementById(
-                "medicacao"
+        if (!Array.isArray(triagens)) {
+
+            throw new Error(
+                "A API não retornou uma lista de triagens."
             );
 
-
-        try {
-
-            const resposta =
-                await fetch(
-                    `${API_URL}/lista-medicacoes`
-                );
+        }
 
 
-            if (!resposta.ok) {
+        // ----------------------------------------------
+        // FILTRAR SOMENTE AGUARDANDO MÉDICO
+        // ----------------------------------------------
 
-                throw new Error(
-                    "Erro ao carregar medicações."
-                );
+        const fila =
+            triagens.filter(
+                function (triagem) {
 
-            }
-
-
-            const medicacoes =
-                await resposta.json();
-
-
-            /*
-                Limpa opções antigas
-            */
-
-            select.innerHTML = `
-
-                <option value="">
-                    Selecione a medicação
-                </option>
-
-            `;
-
-
-            medicacoes.forEach(
-                function (medicacao) {
-
-                    const option =
-                        document.createElement(
-                            "option"
-                        );
-
-
-                    option.value =
-                        medicacao;
-
-
-                    option.textContent =
-                        medicacao;
-
-
-                    select.appendChild(
-                        option
+                    return (
+                        triagem.status ===
+                        "aguardando_medico"
                     );
 
                 }
             );
 
+
+        // ----------------------------------------------
+        // NENHUM PACIENTE
+        // ----------------------------------------------
+
+        if (fila.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="mensagem-vazia">
+
+                    🟢 Nenhum paciente
+                    aguardando consulta.
+
+                </div>
+
+            `;
+
+            return;
+
         }
 
-        catch (erro) {
 
-            console.error(
-                "Erro nas medicações:",
-                erro
+        container.innerHTML = "";
+
+
+        // ----------------------------------------------
+        // EXIBIR PACIENTES
+        // ----------------------------------------------
+
+        fila.forEach(
+            function (triagem) {
+
+                const card =
+                    document.createElement("div");
+
+
+                card.className =
+                    "card-paciente";
+
+
+                const risco =
+                    triagem.risco ||
+                    "verde";
+
+
+                const classeRisco =
+                    `risco-${risco}`;
+
+
+                let textoRisco;
+
+
+                if (risco === "vermelho") {
+
+                    textoRisco =
+                        "🔴 Risco vermelho";
+
+                }
+
+                else if (risco === "amarelo") {
+
+                    textoRisco =
+                        "🟡 Risco amarelo";
+
+                }
+
+                else {
+
+                    textoRisco =
+                        "🟢 Risco verde";
+
+                }
+
+
+                card.innerHTML = `
+
+                    <h4>
+                        👤 ${escapeHTML(
+                            triagem.nome ||
+                            "Paciente"
+                        )}
+                    </h4>
+
+                    <p>
+                        <strong>Sintoma:</strong>
+                        ${escapeHTML(
+                            triagem.sintoma ||
+                            "Não informado"
+                        )}
+                    </p>
+
+                    <p>
+                        <strong>Temperatura:</strong>
+
+                        ${
+                            triagem.temperatura !== null &&
+                            triagem.temperatura !== undefined
+                                ? escapeHTML(
+                                    triagem.temperatura
+                                ) + " °C"
+                                : "Não informada"
+                        }
+
+                    </p>
+
+                    <p>
+                        <strong>Alergia:</strong>
+
+                        ${escapeHTML(
+                            triagem.alergia ||
+                            "Não informado"
+                        )}
+
+                    </p>
+
+                    <p>
+                        <strong>Observação:</strong>
+
+                        ${escapeHTML(
+                            triagem.observacao ||
+                            "Nenhuma"
+                        )}
+
+                    </p>
+
+                    <p>
+
+                        <span
+                            class="risco ${classeRisco}"
+                        >
+                            ${textoRisco}
+                        </span>
+
+                    </p>
+
+                    <button
+                        class="btn-atender"
+                        onclick="selecionarPaciente(${Number(triagem.id)})"
+                    >
+                        🩺 Atender paciente
+                    </button>
+
+                `;
+
+
+                container.appendChild(card);
+
+            }
+        );
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            "Erro ao carregar triagens:",
+            erro
+        );
+
+
+        container.innerHTML = `
+
+            <div class="mensagem-erro">
+
+                ❌ Não foi possível carregar
+                a fila médica.
+
+                <br><br>
+
+                API:
+
+                <br>
+
+                <strong>
+                    ${API_URL}
+                </strong>
+
+                <br><br>
+
+                Erro:
+
+                ${escapeHTML(
+                    erro.message
+                )}
+
+                <br><br>
+
+                Verifique se a API do Render
+                está online.
+
+            </div>
+
+        `;
+
+    }
+
+    finally {
+
+        botao.disabled = false;
+
+    }
+
+}
+
+
+// ======================================================
+// SELECIONAR PACIENTE
+// ======================================================
+
+async function selecionarPaciente(id) {
+
+    try {
+
+        const resposta =
+            await fetch(
+                `${API_URL}/triagens/${id}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
+                }
             );
 
-            /*
-                Não impede o médico
-                de utilizar o restante
-                do sistema.
-            */
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                `Erro HTTP ${resposta.status}`
+            );
 
         }
+
+
+        const paciente =
+            await resposta.json();
+
+
+        if (!paciente) {
+
+            alert(
+                "Paciente não encontrado."
+            );
+
+            return;
+
+        }
+
+
+        pacienteAtual =
+            paciente;
+
+
+        // ----------------------------------------------
+        // MOSTRAR PACIENTE
+        // ----------------------------------------------
+
+        document.getElementById(
+            "pacienteSelecionado"
+        ).innerHTML = `
+
+            🩺 <strong>
+                Paciente selecionado:
+            </strong>
+
+            ${escapeHTML(
+                paciente.nome ||
+                "Paciente"
+            )}
+
+        `;
+
+
+        document.getElementById(
+            "paciente"
+        ).value =
+            paciente.nome || "";
+
+
+        // ----------------------------------------------
+        // LIMPAR CONSULTA
+        // ----------------------------------------------
+
+        document.getElementById(
+            "diagnostico"
+        ).value = "";
+
+
+        document.getElementById(
+            "medicacao"
+        ).value = "";
+
+
+        document.getElementById(
+            "obs"
+        ).value = "";
+
+
+        // ----------------------------------------------
+        // FOCO
+        // ----------------------------------------------
+
+        document.getElementById(
+            "diagnostico"
+        ).focus();
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            "Erro ao selecionar paciente:",
+            erro
+        );
+
+
+        alert(
+            "❌ Erro ao selecionar paciente.\n\n" +
+            erro.message
+        );
+
+    }
+
+}
+
+
+// ======================================================
+// CARREGAR MEDICAÇÕES
+// ======================================================
+
+async function carregarMedicacoes() {
+
+    const select =
+        document.getElementById(
+            "medicacao"
+        );
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                `${API_URL}/lista-medicacoes`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
+                }
+            );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                `Erro HTTP ${resposta.status}`
+            );
+
+        }
+
+
+        const medicacoes =
+            await resposta.json();
+
+
+        if (!Array.isArray(medicacoes)) {
+
+            throw new Error(
+                "Lista de medicações inválida."
+            );
+
+        }
+
+
+        select.innerHTML = `
+
+            <option value="">
+                Selecione a medicação
+            </option>
+
+        `;
+
+
+        medicacoes.forEach(
+            function (medicacao) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    medicacao;
+
+
+                option.textContent =
+                    medicacao;
+
+
+                select.appendChild(
+                    option
+                );
+
+            }
+        );
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            "Erro nas medicações:",
+            erro
+        );
+
+
+        select.innerHTML = `
+
+            <option value="">
+                Não foi possível carregar
+                as medicações
+            </option>
+
+        `;
+
+    }
+
+}
+
+
+// ======================================================
+// FINALIZAR CONSULTA
+// ======================================================
+
+async function salvarConsulta() {
+
+    if (!pacienteAtual) {
+
+        alert(
+            "Selecione um paciente primeiro."
+        );
+
+        return;
 
     }
 
 
-    // =====================================================
-    // SALVAR CONSULTA
-    // =====================================================
+    const diagnostico =
+        document
+            .getElementById("diagnostico")
+            .value
+            .trim();
 
-    async function salvarConsulta() {
 
-        if (!pacienteAtual) {
+    const medicacao =
+        document
+            .getElementById("medicacao")
+            .value;
 
-            alert(
-                "Selecione um paciente primeiro."
+
+    const obs =
+        document
+            .getElementById("obs")
+            .value
+            .trim();
+
+
+    if (!diagnostico) {
+
+        alert(
+            "Informe o diagnóstico."
+        );
+
+        document
+            .getElementById("diagnostico")
+            .focus();
+
+        return;
+
+    }
+
+
+    const botao =
+        document.getElementById(
+            "btnFinalizar"
+        );
+
+
+    botao.disabled = true;
+
+    botao.textContent =
+        "⏳ Finalizando...";
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                `${API_URL}/consulta`,
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        // ID DO PACIENTE
+                        pacienteId:
+                            pacienteAtual.pacienteId ||
+                            null,
+
+                        // ID DA TRIAGEM
+                        triagemId:
+                            pacienteAtual.id,
+
+                        // NOME
+                        paciente:
+                            pacienteAtual.nome,
+
+                        // DIAGNÓSTICO
+                        diagnostico:
+                            diagnostico,
+
+                        // MEDICAÇÃO
+                        medicacao:
+                            medicacao,
+
+                        // OBSERVAÇÕES
+                        obs:
+                            obs
+
+                    })
+
+                }
             );
 
-            return;
 
-        }
-
-
-        const diagnostico =
-            document
-                .getElementById("diagnostico")
-                .value
-                .trim();
-
-
-        const medicacao =
-            document
-                .getElementById("medicacao")
-                .value;
-
-
-        const obs =
-            document
-                .getElementById("obs")
-                .value
-                .trim();
-
-
-        // =================================================
-        // VALIDAÇÃO
-        // =================================================
-
-        if (!diagnostico) {
-
-            alert(
-                "Informe o diagnóstico."
-            );
-
-            document
-                .getElementById("diagnostico")
-                .focus();
-
-            return;
-
-        }
+        let resultado;
 
 
         try {
 
-            const resposta =
-                await fetch(
-                    `${API_URL}/consulta`,
-                    {
-
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body: JSON.stringify({
-
-                            paciente:
-                                pacienteAtual.nome,
-
-                            diagnostico:
-                                diagnostico,
-
-                            medicacao:
-                                medicacao,
-
-                            obs:
-                                obs
-
-                        })
-
-                    }
-                );
-
-
-            const resultado =
+            resultado =
                 await resposta.json();
 
-
-            if (!resposta.ok) {
-
-                throw new Error(
-                    resultado.erro ||
-                    "Erro ao salvar consulta."
-                );
-
-            }
-
-
-            console.log(
-                "Consulta salva:",
-                resultado
-            );
-
-
-            alert(
-                "✅ Consulta finalizada com sucesso!"
-            );
-
-
-            // =================================================
-            // LIMPA CAMPOS
-            // =================================================
-
-            pacienteAtual = null;
-
-
-            document.getElementById(
-                "pacienteSelecionado"
-            ).innerHTML =
-                "Nenhum paciente selecionado.";
-
-
-            document.getElementById(
-                "paciente"
-            ).value = "";
-
-
-            document.getElementById(
-                "diagnostico"
-            ).value = "";
-
-
-            document.getElementById(
-                "medicacao"
-            ).value = "";
-
-
-            document.getElementById(
-                "obs"
-            ).value = "";
-
-
-            // =================================================
-            // ATUALIZA FILA
-            // =================================================
-
-            carregarTriagens();
-
         }
 
-        catch (erro) {
+        catch {
 
-            console.error(
-                "Erro ao salvar consulta:",
-                erro
-            );
-
-
-            alert(
-                "❌ Não foi possível finalizar a consulta.\n\n" +
-                erro.message
+            throw new Error(
+                "A API não retornou uma resposta válida."
             );
 
         }
 
-    }
 
+        if (!resposta.ok) {
 
-    // =====================================================
-    // SAIR
-    // =====================================================
-
-    function sair() {
-
-        window.location.href =
-            "index.html";
-
-    }
-
-
-    // =====================================================
-    // SEGURANÇA
-    // =====================================================
-
-    function escapeHTML(valor) {
-
-        if (
-            valor === null ||
-            valor === undefined
-        ) {
-
-            return "";
+            throw new Error(
+                resultado.erro ||
+                `Erro HTTP ${resposta.status}`
+            );
 
         }
 
 
-        const div =
-            document.createElement("div");
+        console.log(
+            "Consulta salva:",
+            resultado
+        );
 
 
-        div.textContent =
-            String(valor);
+        alert(
+            "✅ Consulta finalizada com sucesso!"
+        );
 
 
-        return div.innerHTML;
+        // ----------------------------------------------
+        // LIMPAR
+        // ----------------------------------------------
+
+        pacienteAtual = null;
+
+
+        document.getElementById(
+            "pacienteSelecionado"
+        ).innerHTML =
+            "Nenhum paciente selecionado.";
+
+
+        document.getElementById(
+            "paciente"
+        ).value = "";
+
+
+        document.getElementById(
+            "diagnostico"
+        ).value = "";
+
+
+        document.getElementById(
+            "medicacao"
+        ).value = "";
+
+
+        document.getElementById(
+            "obs"
+        ).value = "";
+
+
+        // ----------------------------------------------
+        // ATUALIZAR FILA
+        // ----------------------------------------------
+
+        await carregarTriagens();
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            "Erro ao salvar consulta:",
+            erro
+        );
+
+
+        alert(
+            "❌ Não foi possível finalizar a consulta.\n\n" +
+            erro.message
+        );
+
+    }
+
+    finally {
+
+        botao.disabled = false;
+
+        botao.textContent =
+            "Finalizar consulta";
+
+    }
+
+}
+
+
+// ======================================================
+// SAIR
+// ======================================================
+
+function sair() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+// ======================================================
+// ESCAPAR HTML
+// ======================================================
+
+function escapeHTML(valor) {
+
+    if (
+        valor === null ||
+        valor === undefined
+    ) {
+
+        return "";
 
     }
 
 
-    // =====================================================
-    // ATUALIZAÇÃO AUTOMÁTICA
-    // =====================================================
+    const div =
+        document.createElement(
+            "div"
+        );
 
-    /*
-        Atualiza a fila automaticamente
-        a cada 5 segundos.
 
-        Assim, quando uma nova triagem
-        for feita em outro computador,
-        o médico verá a atualização.
-    */
+    div.textContent =
+        String(valor);
 
-    setInterval(
-        function () {
 
-            carregarTriagens();
+    return div.innerHTML;
 
-        },
-        5000
-    );
+}
+
+
+// ======================================================
+// ATUALIZAÇÃO AUTOMÁTICA
+// ======================================================
+
+setInterval(
+    function () {
+
+        carregarTriagens();
+
+    },
+    5000
+);
+
 
 </script>
 
