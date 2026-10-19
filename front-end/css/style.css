@@ -1293,3 +1293,40 @@ label {
         color: black;
     }
 }, atualize meu css
+
+
+/* =========================================================
+   BOTÃO ALTA MÉDICA — TEMA SENTINELA
+   ========================================================= */
+
+.btn-alta {
+    background: linear-gradient(
+        135deg,
+        #861818,
+        #680E0E
+    );
+
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-left: 4px solid #D35B5B;
+
+    box-shadow: 0 8px 20px rgba(63, 7, 7, 0.30);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.btn-alta:hover {
+    background: linear-gradient(
+        135deg,
+        #A93838,
+        #861818
+    );
+
+    color: #FFFFFF;
+    transform: translateY(-3px);
+
+    box-shadow: 0 12px 25px rgba(63, 7, 7, 0.40);
+}
