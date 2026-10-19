@@ -346,6 +346,81 @@ function classificarRisco(
   return "verde";
 }
 
+
+/* ======================================================
+   CLASSIFICAÇÃO DE RISCO COM APOIO DA IA
+   ====================================================== */
+
+async function analisarRiscoComIA({
+  sintoma,
+  temperatura,
+  observacao
+}) {
+  if (!openai) {
+    throw new Error(
+      "OPENAI_API_KEY não configurada."
+    );
+  }
+
+  const resposta = await openai.responses.create({
+    model: "gpt-4.1-mini",
+
+    instructions: `
+Você é um assistente de apoio à triagem hospitalar.
+
+Analise apenas os dados fornecidos.
+Não invente informações nem faça diagnósticos definitivos.
+Não considere dados ausentes como prova de baixo risco.
+
+Responda em JSON com:
+{
+  "risco": "vermelho, amarelo, verde ou indeterminado",
+  "justificativa": "motivo da sugestão",
+  "alerta": "sinais de alerta identificados"
+}
+
+Use "indeterminado" quando os dados forem insuficientes.
+A classificação deve ser revisada por um profissional de saúde.
+Suspeitas de emergência exigem avaliação imediata.
+Não substitua protocolos clínicos institucionais.
+`,
+
+    input: JSON.stringify({
+      sintoma,
+      temperatura,
+      observacao
+    })
+  });
+
+  const resultado = JSON.parse(
+    resposta.output_text
+  );
+
+  const riscosPermitidos = [
+    "vermelho",
+    "amarelo",
+    "verde",
+    "indeterminado"
+  ];
+
+  if (!riscosPermitidos.includes(resultado.risco)) {
+    throw new Error(
+      "Classificação retornada pela IA é inválida."
+    );
+  }
+
+  return {
+    risco: resultado.risco,
+    justificativa: String(
+      resultado.justificativa || ""
+    ),
+    alerta: String(
+      resultado.alerta || ""
+    ),
+    revisao_profissional: true
+  };
+}
+
 // ======================================================
 // PÁGINA INICIAL
 // ======================================================
@@ -1243,6 +1318,57 @@ app.get(
   }
 );
 
+
+app.post("/triagem/analisar-risco", async (req, res) => {
+    try {
+        const sintoma = String(
+            req.body.sintoma || ""
+        ).trim();
+
+        const temperatura = Number(
+            req.body.temperatura
+        );
+
+        const observacao = String(
+            req.body.observacao || ""
+        ).trim();
+
+        if (
+            !sintoma ||
+            !Number.isFinite(temperatura) ||
+            temperatura <= 0
+        ) {
+            return res.status(400).json({
+                erro: "Informe sintoma e temperatura válidos."
+            });
+        }
+
+        const analise = await analisarRiscoComIA({
+            sintoma,
+            temperatura,
+            observacao
+        });
+
+        return res.json({
+            sucesso: true,
+            analise
+        });
+
+    } catch (erro) {
+        console.error(
+            "Erro na análise de risco:",
+            erro.message
+        );
+
+        return res.status(502).json({
+            sucesso: false,
+            erro: "Não foi possível analisar o risco com a IA.",
+            revisao_profissional: true
+        });
+    }
+});
+
+
 // ======================================================
 // ROTA NÃO ENCONTRADA
 // ======================================================
@@ -1310,3 +1436,14 @@ app.listen(
     console.log("");
   }
 );
+
+const OpenAI = require("openai");
+// ======================================================
+// CONFIGURAÇÃO DA INTELIGÊNCIA ARTIFICIAL
+// ======================================================
+
+const openai = process.env.OPENAI_API_KEY
+    ? new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY
+      })
+    : null;
