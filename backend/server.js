@@ -2,9 +2,15 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
+const OpenAI = require("openai");
 
 const app = express();
 
+const openai = process.env.OPENAI_API_KEY
+  ? new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    })
+  : null;
 // ======================================================
 // PORTA
 // ======================================================
