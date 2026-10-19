@@ -37,7 +37,7 @@ const FRONTEND_DIR = path.join(
 );
 
 const CSS_DIR = path.join(
-  __dirname,
+  FRONTEND_DIR,
   "css"
 );
 
